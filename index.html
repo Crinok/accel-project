@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Gyro Project</title>
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<style>
+body {
+	background: #00bb72; font-family: helvetica, arial, sans serif;
+}
+#ball {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-radius: 20px;
+	-webkit-radius: 20px;
+	background-color: #fff;
+}
+</style>
+</head>
+
+<body>
+<div id="content">
+    <div id="ball"></div>
+
+</div>
+<script type="text/javascript">
+
+var x = document.documentElement.clientWidth / 2, y = document.documentElement.clientHeight / 2,
+    vx = 0, vy = 0,
+	ax = 0, ay = 0;
+	
+var ball = document.getElementById("ball");
+
+if (window.DeviceMotionEvent != undefined) {
+	window.ondevicemotion = function(e) {
+		ax = event.accelerationIncludingGravity.x * -5;
+		ay = event.accelerationIncludingGravity.y * -5;
+	}
+
+	setInterval( function() {
+		var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
+		if (landscapeOrientation) {
+			vx = vx + ay;
+			vy = vy + ax;
+		} else {
+			vy = vy - ay;
+			vx = vx + ax;
+		}
+
+		vx = vx * 0.98;
+		vy = vy * 0.98;
+		y = parseInt(y + vy / 50);
+		x = parseInt(x + vx / 50);
+		
+		boundingBoxCheck();
+		
+		ball.style.top = y + "px";
+		ball.style.left = x + "px";
+		
+	}, 25);
+} 
+
+
+function boundingBoxCheck(){
+	if (x < 0) {
+		x = 0;
+		vx = -vx; 
+	}
+
+	if (y < 0) {
+		y = 0;
+		vy = -vy; 
+	}
+
+	if (x > document.documentElement.clientWidth-20) {
+		x = document.documentElement.clientWidth-20;
+		vx = -vx; 
+	}
+	if (y > document.documentElement.clientHeight-20) {
+		y = document.documentElement.clientHeight-20;
+		vy = -vy; 
+	}	
+}
+
+</script>
+
+</body>
+</html>
