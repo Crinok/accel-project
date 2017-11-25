@@ -77,11 +77,11 @@ function boundingBoxCheck(){
 	}
 
 	if (x > document.documentElement.clientWidth-20) {
-		x = document.documentElement.clientWidth;
+		x = document.documentElement.clientWidth-100;
 		vx = -vx; 
 	}
 	if (y > document.documentElement.clientHeight-20) {
-		y = document.documentElement.clientHeight;
+		y = document.documentElement.clientHeight-100;
 		vy = -vy; 
 	}	
 }
