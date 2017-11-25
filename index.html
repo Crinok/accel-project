@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Gyro Project</title>
+<title>Accelerometer Project</title>
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <style>
 body {
@@ -30,13 +30,15 @@ var x = document.documentElement.clientWidth / 2, y = document.documentElement.c
     vx = 0, vy = 0,
 	ax = 0, ay = 0;
 var frameRate = 25;
+var acceleration = 2;
+var gravity = 0.97;
 	
 var ball = document.getElementById("ball");
 
 if (window.DeviceMotionEvent != undefined) {
 	window.ondevicemotion = function(e) {
-		ax = event.accelerationIncludingGravity.x * - 2;
-		ay = event.accelerationIncludingGravity.y * - 2;
+		ax = event.accelerationIncludingGravity.x * - acceleration;
+		ay = event.accelerationIncludingGravity.y * - acceleration;
 	}
 
 	setInterval( function() {
@@ -49,8 +51,8 @@ if (window.DeviceMotionEvent != undefined) {
 			vx = vx + ax;
 		}
 
-		vx = vx * 0.95;
-		vy = vy * 0.95;
+		vx = vx * gravity;
+		vy = vy * gravity;
 		y = parseInt(y + vy / 50);
 		x = parseInt(x + vx / 50);
 		
