@@ -29,13 +29,14 @@ body {
 var x = document.documentElement.clientWidth / 2, y = document.documentElement.clientHeight / 2,
     vx = 0, vy = 0,
 	ax = 0, ay = 0;
+var frameRate = 25;
 	
 var ball = document.getElementById("ball");
 
 if (window.DeviceMotionEvent != undefined) {
 	window.ondevicemotion = function(e) {
-		ax = event.accelerationIncludingGravity.x * -5;
-		ay = event.accelerationIncludingGravity.y * -5;
+		ax = event.accelerationIncludingGravity.x * - 9.8;
+		ay = event.accelerationIncludingGravity.y * - 9.8;
 	}
 
 	setInterval( function() {
@@ -58,7 +59,7 @@ if (window.DeviceMotionEvent != undefined) {
 		ball.style.top = y + "px";
 		ball.style.left = x + "px";
 		
-	}, 100);
+	}, frameRate);
 } 
 
 
