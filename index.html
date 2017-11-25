@@ -29,8 +29,9 @@ body {
 var x = document.documentElement.clientWidth / 2, y = document.documentElement.clientHeight / 2,
     vx = 0, vy = 0,
 	ax = 0, ay = 0;
-var frameRate = 25;
 var acceleration = 2;
+var bounciness = 8;
+var frameRate = 25;
 var gravity = 0.97;
 	
 var ball = document.getElementById("ball");
@@ -68,21 +69,21 @@ if (window.DeviceMotionEvent != undefined) {
 function boundingBoxCheck(){
 	if (x < 0) {
 		x = 0;
-		vx = -vx; 
+		vx = -vx / bounciness; 
 	}
 
 	if (y < 0) {
 		y = 0;
-		vy = -vy; 
+		vy = -vy / bounciness; 
 	}
 
-	if (x > document.documentElement.clientWidth-100) {
-		x = document.documentElement.clientWidth-100;
-		vx = -vx/8; 
+	if (x > document.documentElement.clientWidth-20) {
+		x = document.documentElement.clientWidth-20;
+		vx = -vx / bounciness; 
 	}
-	if (y > document.documentElement.clientHeight-100) {
-		y = document.documentElement.clientHeight-100;
-		vy = -vy/8; 
+	if (y > document.documentElement.clientHeight-20) {
+		y = document.documentElement.clientHeight-20;
+		vy = -vy / bounciness; 
 	}	
 }
 
