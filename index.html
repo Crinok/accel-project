@@ -35,8 +35,8 @@ var ball = document.getElementById("ball");
 
 if (window.DeviceMotionEvent != undefined) {
 	window.ondevicemotion = function(e) {
-		ax = event.accelerationIncludingGravity.x * - 9.8;
-		ay = event.accelerationIncludingGravity.y * - 9.8;
+		ax = event.accelerationIncludingGravity.x * - 2;
+		ay = event.accelerationIncludingGravity.y * - 2;
 	}
 
 	setInterval( function() {
