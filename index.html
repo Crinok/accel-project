@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <style>
 *{
-	margin:0; padding:0;
+	margin:0; padding: 0;
 }
 body {
 	background: #00bb72; font-family: helvetica, arial, sans serif;
@@ -82,13 +82,13 @@ function draw(){
 }
 
 function boundingBoxCheck(){
-	if (x < 0) {
-		x = 0;
+	if (x < 20) {
+		x = 20;
 		vx = -vx / bounciness; 
 	}
 
-	if (y < 0) {
-		y = 0;
+	if (y < 20) {
+		y = 20;
 		vy = -vy / bounciness; 
 	}
 
