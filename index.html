@@ -61,6 +61,13 @@ if (window.DeviceMotionEvent != undefined) {
 		y = parseInt(y + vy / 50);
 		x = parseInt(x + vx / 50);
 		
+		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY < ball.radius + hole1.radius)){
+			hole1.color = "red";
+		}
+		else{
+			hole1.color = "#180c04";
+		}
+		
 		boundingBoxCheck();
 		init();
 		hole1.update();
@@ -68,13 +75,6 @@ if (window.DeviceMotionEvent != undefined) {
 		hole3.update();
 		hole4.update();
 		ball.update();
-
-		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY < ball.radius + hole1.radius)){
-			hole1.color = "red";
-		}
-		else{
-			hole1.color = "#180c04";
-		}
 
 	}, frameRate);
 } 
