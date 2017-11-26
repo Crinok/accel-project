@@ -19,6 +19,7 @@ body {
 
 <div id="content">
 
+	<!-- <button onclick="copy()">Copy</button> -->
 </div>
 
 <script type="text/javascript">
@@ -45,7 +46,7 @@ if (window.DeviceMotionEvent != undefined) {
 		ax = event.accelerationIncludingGravity.x * - acceleration;
 		ay = event.accelerationIncludingGravity.y * - acceleration;
 	}
-
+	
 	setInterval( function() {
 		var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
 		if (landscapeOrientation) {
@@ -63,40 +64,31 @@ if (window.DeviceMotionEvent != undefined) {
 		
 		boundingBoxCheck();
 		init();
+		var pixels = getImagePixels();
+		examinePixels(pixels);
 		circle2.update();
 		circle1.update();
-		
-		
 	}, frameRate);
+
+	
 } 
 
+function getImagePixels(){
+	var imgData = context.getImageData(circle1.posX + circle1.radius + 2, circle1.posY + circle1.radius + 2, 1, 1);
+    return imgData;
+}
+
+// function copy() {
+//     var imgData = context.getImageData(circle1.posX + circle1.radius + 2, circle1.posY + circle1.radius + 2, 1, 1);
+//     return imgData;
+// }
 
 var circle1, circle2;
 
 function init(){
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	circle2 = new Circle(canvas.width / 2, canvas.height / 2, 50, "blue");
 	circle1 = new Circle(x, y, 10, "white");
-	
-	//Big Circle
-	// context.beginPath();
-	// context.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2, false);
-	// context.fillStyle = 'red';
-	// context.fill();
-	// context.lineWidth = 1;
-	// context.strokeStyle = 'red';
-	// context.stroke();
-	// context.closePath();
-
-	// //Small circle
-	// context.beginPath();
-	// context.arc(x, y, 10, 0, Math.PI * 2, false);
-	// context.fillStyle = 'white';
-	// context.fill();
-	// context.lineWidth = 1;
-	// context.strokeStyle = 'white';
-	// context.stroke();
-	// context.closePath();
+	circle2 = new Circle(canvas.width / 2, canvas.height / 2, 50, "red");
 }
 
 function Circle(posX, posY, radius, color){
@@ -118,7 +110,9 @@ function Circle(posX, posY, radius, color){
 		context.strokeStyle = this.color;
 		context.stroke();
 		context.closePath();
+
 	};
+
 }
 
 function boundingBoxCheck(){
@@ -140,11 +134,26 @@ function boundingBoxCheck(){
 		y = document.documentElement.clientHeight-20;
 		vy = -vy / bounciness; 
 	}	
+
+
+
+}
+
+function examinePixels(imgData){
+	for (var i=0;i<imgData.data.length;i+=4){
+		var red = imgData.data[i];
+		var green = imgData.data[i+1];
+		var blue = imgData.data[i+2]
+
+		if(red != 0 && green != 187 && blue != 114){
+			vx = -vx / bounciness;
+			vy = -vy / bounciness;
+		}
+	}
 }
 
 window.onload = init;
 
 </script>
-
 </body>
 </html>
