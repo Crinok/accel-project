@@ -39,6 +39,9 @@ var acceleration = 7;
 var bounciness = 8;
 var frameRate = 25;
 var gravity = 0.97;
+
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
 	
 var ball = document.getElementById("ball");
 
@@ -73,12 +76,8 @@ if (window.DeviceMotionEvent != undefined) {
 } 
 
 function draw(){
-	var canvas = document.getElementById("canvas");
-	var context = canvas.getContext("2d");
-
-	var centerX = canvas.width / 2;
-	var centerY = canvas.height / 2;
-
+	
+	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.beginPath();
 	context.arc(x, y, 10, 0, 2 * Math.PI, false);
 	context.fillStyle = 'red';
@@ -86,13 +85,6 @@ function draw(){
 	context.lineWidth = 1;
 	context.strokeStyle = 'red';
 	context.stroke();
-	context.clearRect(0, 0, canvas.width, canvas.height);
-	// context.beginPath();
-	// context.arc(centerX, centerY, 50, 0, 2 * Math.PI, false);
-	// context.lineWidth = 5;
-	// context.strokeStyle = 'red';
-	// context.stroke();
-
 }
 
 function boundingBoxCheck(){
