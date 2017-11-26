@@ -62,7 +62,6 @@ if (window.DeviceMotionEvent != undefined) {
 		x = parseInt(x + vx / 50);
 		
 		boundingBoxCheck();
-		
 		init();
 		circle1.update();
 		
@@ -74,7 +73,7 @@ var circle1;
 
 function init(){
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	circle1 = new Circle(x, y, 10, "red");
+	circle1 = new Circle(x, y, 10, "white");
 	//Big Circle
 	// context.beginPath();
 	// context.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2, false);
@@ -119,13 +118,13 @@ function Circle(a, b, radius, color){
 }
 
 function boundingBoxCheck(){
-	if (x < 0) {
-		x = 0;
+	if (x < 20) {
+		x = 20;
 		vx = -vx / bounciness; 
 	}
 
-	if (y < 0) {
-		y = 0;
+	if (y < 20) {
+		y = 20;
 		vy = -vy / bounciness; 
 	}
 
