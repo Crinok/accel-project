@@ -78,8 +78,7 @@ if (window.DeviceMotionEvent != undefined) {
 
 		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) < ball.radius + hole1.radius){
 			hole1.color = "red";
-			var style = div1.getAttribute("style");
-			style.display = "block";
+			div1.style.display = "block";
 		}
 		else{
 			hole1.color = "#180c04";
