@@ -9,7 +9,7 @@
 	margin:0; padding: 0;
 }
 body {
-	background: #00bb72; font-family: helvetica, arial, sans serif;
+	background: #52acc6; font-family: helvetica, arial, sans serif;
 }
 
 </style>
@@ -19,7 +19,6 @@ body {
 
 <div id="content">
 
-	<!-- <button onclick="copy()">Copy</button> -->
 </div>
 
 <script type="text/javascript">
@@ -64,31 +63,27 @@ if (window.DeviceMotionEvent != undefined) {
 		
 		boundingBoxCheck();
 		init();
-		var pixels = getImagePixels();
-		examinePixels(pixels);
-		circle2.update();
-		circle1.update();
+		hole1.update();
+		hole2.update();
+		hole3.update();
+		hole4.update();
+		ball.update();
+		
+
 	}, frameRate);
 
 	
 } 
 
-function getImagePixels(){
-	var imgData = context.getImageData(circle1.posX + circle1.radius + 2, circle1.posY + circle1.radius + 2, 1, 1);
-    return imgData;
-}
-
-// function copy() {
-//     var imgData = context.getImageData(circle1.posX + circle1.radius + 2, circle1.posY + circle1.radius + 2, 1, 1);
-//     return imgData;
-// }
-
-var circle1, circle2;
+var ball, hole1, hole2, hole3, hole4;
 
 function init(){
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	circle1 = new Circle(x, y, 10, "white");
-	circle2 = new Circle(canvas.width / 2, canvas.height / 2, 50, "red");
+	ball = new Circle(x, y, 10, "white");
+	hole1 = new Circle(canvas.width / 2, 20, 20, '#180c04');
+	hole2 = new Circle(canvas.width - 20, canvas.height / 2, 20, '#180c04');
+	hole3 = new Circle(canvas.width / 2, canvas.height - 20, 20, '#180c04');
+	hole4 = new Circle(20, canvas.height / 2, 20, '#180c04');
 }
 
 function Circle(posX, posY, radius, color){
@@ -110,7 +105,6 @@ function Circle(posX, posY, radius, color){
 		context.strokeStyle = this.color;
 		context.stroke();
 		context.closePath();
-
 	};
 
 }
@@ -137,21 +131,6 @@ function boundingBoxCheck(){
 
 
 
-}
-
-function examinePixels(imgData){
-	for (var i=0;i<imgData.data.length;i+=4){
-		var red = imgData.data[i];
-		var green = imgData.data[i+1];
-		var blue = imgData.data[i+2]
-
-		if(red == 255 && green == 0 && blue == 0){
-			x = 20;
-			vx = -vx / bounciness;
-			y = 20;
-			vy = -vy / bounciness;
-		}
-	}
 }
 
 window.onload = init;
