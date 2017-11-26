@@ -110,12 +110,12 @@ if (window.DeviceMotionEvent != undefined) {
 		boundingBoxCheck();
 		init();
 
-		// if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) < ball.radius + hole1.radius){
-		// 	div1.style.display = "block";
-		// }
-		// else if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) > ball.radius + hole1.radius){
-		// 	div1.style.display = "none";
-		// }
+		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) < ball.radius + hole1.radius){
+			div1.style.display = "block";
+		}
+		else if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) > ball.radius + hole1.radius){
+			div1.style.display = "none";
+		}
 
 		if(getDistance(ball.posX, ball.posY, hole2.posX, hole2.posY) < ball.radius + hole2.radius){
 			div2.style.display = "block";
