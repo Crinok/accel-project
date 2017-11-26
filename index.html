@@ -64,16 +64,19 @@ if (window.DeviceMotionEvent != undefined) {
 		boundingBoxCheck();
 		init();
 		circle1.update();
+		circle2.update();
 		
 	}, frameRate);
 } 
 
 
-var circle1;
+var circle1, circle2;
 
 function init(){
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	circle1 = new Circle(x, y, 10, "red");
+	circle2 = new Circle(canvas.width / 2, canvas.height / 2, 50, "red");
+	circle1 = new Circle(x, y, 10, "white");
+	
 	//Big Circle
 	// context.beginPath();
 	// context.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2, false);
@@ -95,9 +98,9 @@ function init(){
 	// context.closePath();
 }
 
-function Circle(x, y, radius, color){
-	this.x = x;
-	this.y = y;
+function Circle(posX, posY, radius, color){
+	this.posX = posX;
+	this.posY = posY;
 	this.radius = radius;
 	this.color = color;
 
@@ -107,7 +110,7 @@ function Circle(x, y, radius, color){
 
 	this.draw = function(){
 		context.beginPath();
-		context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+		context.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2, false);
 		context.fillStyle = this.color;
 		context.fill();
 		context.lineWidth = 1;
