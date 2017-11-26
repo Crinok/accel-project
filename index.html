@@ -31,16 +31,14 @@ var frameRate = 25;
 var gravity = 0.97;
 
 var canvas = document.createElement('canvas');
-canvas.id = "cnvs";
-canvas.width = document.documentElement.clientWidth;
-canvas.height = document.documentElement.clientHeight;
-canvas.style.border = "1px solid red";
+	canvas.id = "cnvs";
+	canvas.width = document.documentElement.clientWidth;
+	canvas.height = document.documentElement.clientHeight;
+
 var content = document.getElementById("content");
-content.appendChild(canvas);
+	content.appendChild(canvas);
 
 var context = canvas.getContext("2d");
-	
-var ball = document.getElementById("ball");
 
 if (window.DeviceMotionEvent != undefined) {
 	window.ondevicemotion = function(e) {
