@@ -124,19 +124,19 @@ if (window.DeviceMotionEvent != undefined) {
 			div2.style.display = "none";
 		}
 
-		// else if(getDistance(ball.posX, ball.posY, hole3.posX, hole3.posY) < ball.radius + hole3.radius){
-		// 	div3.style.display = "block";
-		// }
-		// else if(getDistance(ball.posX, ball.posY, hole3.posX, hole3.posY) > ball.radius + hole3.radius){
-		// 	div3.style.display = "none";
-		// }
+		if(getDistance(ball.posX, ball.posY, hole3.posX, hole3.posY) < ball.radius + hole3.radius){
+			div3.style.display = "block";
+		}
+		else if(getDistance(ball.posX, ball.posY, hole3.posX, hole3.posY) > ball.radius + hole3.radius){
+			div3.style.display = "none";
+		}
 
-		// else if(getDistance(ball.posX, ball.posY, hole4.posX, hole4.posY) < ball.radius + hole4.radius){
-		// 	div4.style.display = "block";
-		// }
-		// else if(getDistance(ball.posX, ball.posY, hole4.posX, hole4.posY) > ball.radius + hole4.radius){
-		// 	div4.style.display = "none";
-		// }
+		if(getDistance(ball.posX, ball.posY, hole4.posX, hole4.posY) < ball.radius + hole4.radius){
+			div4.style.display = "block";
+		}
+		else if(getDistance(ball.posX, ball.posY, hole4.posX, hole4.posY) > ball.radius + hole4.radius){
+			div4.style.display = "none";
+		}
 
 		console.log(ball.radius + hole1.radius);
 		hole1.update();
