@@ -8,26 +8,13 @@
 body {
 	background: #00bb72; font-family: helvetica, arial, sans serif;
 }
-#ball {
-	position: absolute;
-	width: 20px;
-	height: 20px;
-	border-radius: 20px;
-	-webkit-radius: 20px;
-	background-color: #fff;
-}
 
-#canvas{
-	border: 1px solid #fff;
-}
 </style>
 </head>
 
 <body>
 
 <div id="content">
-    <div id="ball"></div>
-    <canvas id="canvas" width="400" height="400"></canvas>
 
 </div>
 
@@ -40,7 +27,14 @@ var bounciness = 8;
 var frameRate = 25;
 var gravity = 0.97;
 
-var canvas = document.getElementById("canvas");
+var canvas = document.createElement('canvas');
+canvas.id = "cnvs";
+canvas.width = document.documentElement.clientWidth;
+canvas.height = document.documentElement.clientHeight;
+canvas.style.border = "1px solid red";
+var content = document.getElementById("content");
+content.appendChild(canvas);
+
 var context = canvas.getContext("2d");
 	
 var ball = document.getElementById("ball");
@@ -69,9 +63,6 @@ if (window.DeviceMotionEvent != undefined) {
 		boundingBoxCheck();
 		draw();
 		
-		//ball.style.top = y + "px";
-		//ball.style.left = x + "px";
-		
 	}, frameRate);
 } 
 
@@ -79,11 +70,11 @@ function draw(){
 	
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.beginPath();
-	context.arc(x, y, 10, 0, 2 * Math.PI, false);
-	context.fillStyle = 'red';
+	context.arc(x, y, 10, 0, Math.PI * 2, false);
+	context.fillStyle = 'white';
 	context.fill();
 	context.lineWidth = 1;
-	context.strokeStyle = 'red';
+	context.strokeStyle = 'white';
 	context.stroke();
 }
 
