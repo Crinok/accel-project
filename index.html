@@ -90,13 +90,13 @@ function draw(){
 }
 
 function boundingBoxCheck(){
-	if (x < 0) {
-		x = 0;
+	if (x < 50) {
+		x = 50;
 		vx = -vx / bounciness; 
 	}
 
-	if (y < 0) {
-		y = 0;
+	if (y < 50) {
+		y = 50;
 		vy = -vy / bounciness; 
 	}
 
