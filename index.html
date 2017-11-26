@@ -71,20 +71,23 @@ if (window.DeviceMotionEvent != undefined) {
 
 function draw(){
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	context.beginPath();
-	context.arc(x, y, 10, 0, Math.PI * 2, false);
-	context.fillStyle = 'white';
-	context.fill();
-	context.lineWidth = 1;
-	context.strokeStyle = 'white';
-	context.stroke();
-
+	
+	//Big Circle
 	context.beginPath();
 	context.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2, false);
 	context.fillStyle = 'red';
 	context.fill();
 	context.lineWidth = 1;
 	context.strokeStyle = 'red';
+	context.stroke();
+
+	//Small circle
+	context.beginPath();
+	context.arc(x, y, 10, 0, Math.PI * 2, false);
+	context.fillStyle = 'white';
+	context.fill();
+	context.lineWidth = 1;
+	context.strokeStyle = 'white';
 	context.stroke();
 }
 
