@@ -73,7 +73,7 @@ var circle1;
 
 function init(){
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	circle1 = new Circle(x, y, 10, "white");
+	circle1 = new Circle(x, y, 10, "red");
 	//Big Circle
 	// context.beginPath();
 	// context.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2, false);
@@ -95,9 +95,9 @@ function init(){
 	// context.closePath();
 }
 
-function Circle(a, b, radius, color){
-	this.a = a;
-	this.b = b;
+function Circle(x, y, radius, color){
+	this.x = x;
+	this.y = y;
 	this.radius = radius;
 	this.color = color;
 
@@ -107,7 +107,7 @@ function Circle(a, b, radius, color){
 
 	this.draw = function(){
 		context.beginPath();
-		context.arc(this.a, this.b, this.radius, 0, Math.PI * 2, false);
+		context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
 		context.fillStyle = this.color;
 		context.fill();
 		context.lineWidth = 1;
