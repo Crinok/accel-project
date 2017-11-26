@@ -18,8 +18,8 @@ body {
 	background: #fff;
 	border-radius: 5px;
 	position: fixed;
-	top: calc( 50% - 100px );
-	left: calc( 50% - 100px );
+	top: calc( 50% - 50px );
+	left: calc( 50% - 50px );
 	display: none;
 }
 
@@ -79,28 +79,28 @@ if (window.DeviceMotionEvent != undefined) {
 		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) < ball.radius + hole1.radius){
 			div1.style.display = "block";
 		}
-		else{
+		else if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) > ball.radius + hole1.radius){
 			div1.style.display = "none";
 		}
 
-		if(getDistance(ball.posX, ball.posY, hole2.posX, hole2.posY) < ball.radius + hole2.radius){
+		else if(getDistance(ball.posX, ball.posY, hole2.posX, hole2.posY) < ball.radius + hole2.radius){
 			div1.style.display = "block";
 		}
-		else{
+		else if(getDistance(ball.posX, ball.posY, hole2.posX, hole2.posY) > ball.radius + hole2.radius){
 			div1.style.display = "none";
 		}
 
-		if(getDistance(ball.posX, ball.posY, hole3.posX, hole3.posY) < ball.radius + hole3.radius){
+		else if(getDistance(ball.posX, ball.posY, hole3.posX, hole3.posY) < ball.radius + hole3.radius){
 			div1.style.display = "block";
 		}
-		else{
+		else if(getDistance(ball.posX, ball.posY, hole3.posX, hole3.posY) > ball.radius + hole3.radius){
 			div1.style.display = "none";
 		}
 
-		if(getDistance(ball.posX, ball.posY, hole4.posX, hole4.posY) < ball.radius + hole4.radius){
+		else if(getDistance(ball.posX, ball.posY, hole4.posX, hole4.posY) < ball.radius + hole4.radius){
 			div1.style.display = "block";
 		}
-		else{
+		else if(getDistance(ball.posX, ball.posY, hole4.posX, hole4.posY) > ball.radius + hole4.radius){
 			div1.style.display = "none";
 		}
 
