@@ -70,7 +70,6 @@ if (window.DeviceMotionEvent != undefined) {
 } 
 
 function draw(){
-	
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.beginPath();
 	context.arc(x, y, 10, 0, Math.PI * 2, false);
@@ -79,16 +78,25 @@ function draw(){
 	context.lineWidth = 1;
 	context.strokeStyle = 'white';
 	context.stroke();
+
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.beginPath();
+	context.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2, false);
+	context.fillStyle = 'red';
+	context.fill();
+	context.lineWidth = 1;
+	context.strokeStyle = 'red';
+	context.stroke();
 }
 
 function boundingBoxCheck(){
-	if (x < 20) {
-		x = 20;
+	if (x < 0) {
+		x = 0;
 		vx = -vx / bounciness; 
 	}
 
-	if (y < 20) {
-		y = 20;
+	if (y < 0) {
+		y = 0;
 		vy = -vy / bounciness; 
 	}
 
