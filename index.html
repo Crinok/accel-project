@@ -16,20 +16,26 @@ body {
 	-webkit-radius: 20px;
 	background-color: #fff;
 }
+
+#canvas{
+	border: 1px solid #fff;
+}
 </style>
 </head>
 
 <body>
+
 <div id="content">
     <div id="ball"></div>
+    <canvas id="canvas" width="400" height="400"></canvas>
 
 </div>
-<script type="text/javascript">
 
+<script type="text/javascript">
 var x = document.documentElement.clientWidth / 2, y = document.documentElement.clientHeight / 2;
 var vx = 0, vy = 0,
 	ax = 0, ay = 0;
-var acceleration = 4;
+var acceleration = 7;
 var bounciness = 8;
 var frameRate = 25;
 var gravity = 0.97;
@@ -58,6 +64,7 @@ if (window.DeviceMotionEvent != undefined) {
 		x = parseInt(x + vx / 50);
 		
 		boundingBoxCheck();
+		draw();
 		
 		ball.style.top = y + "px";
 		ball.style.left = x + "px";
@@ -65,6 +72,28 @@ if (window.DeviceMotionEvent != undefined) {
 	}, frameRate);
 } 
 
+function draw(){
+	var canvas = document.getElementById("canvas");
+	var context = canvas.getContext("2d");
+
+	var centerX = canvas.width / 2;
+	var centerY = canvas.height / 2;
+
+	context.beginPath();
+	context.arc(x, y, 10, 0, 2 * Math.PI, false);
+	context.fillStyle = 'red';
+	context.fill();
+	context.lineWidth = 1;
+	context.strokeStyle = 'red';
+	context.stroke();
+
+	// context.beginPath();
+	// context.arc(centerX, centerY, 50, 0, 2 * Math.PI, false);
+	// context.lineWidth = 5;
+	// context.strokeStyle = 'red';
+	// context.stroke();
+
+}
 
 function boundingBoxCheck(){
 	if (x < 0) {
@@ -86,6 +115,8 @@ function boundingBoxCheck(){
 		vy = -vy / bounciness; 
 	}	
 }
+
+window.onload = draw;
 
 </script>
 
