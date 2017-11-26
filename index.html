@@ -62,41 +62,68 @@ if (window.DeviceMotionEvent != undefined) {
 		x = parseInt(x + vx / 50);
 		
 		boundingBoxCheck();
-		draw();
+		init();
 		
 	}, frameRate);
 } 
 
-function draw(){
-	context.clearRect(0, 0, canvas.width, canvas.height);
-	
-	//Big Circle
-	context.beginPath();
-	context.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2, false);
-	context.fillStyle = 'red';
-	context.fill();
-	context.lineWidth = 1;
-	context.strokeStyle = 'red';
-	context.stroke();
 
-	//Small circle
-	context.beginPath();
-	context.arc(x, y, 10, 0, Math.PI * 2, false);
-	context.fillStyle = 'white';
-	context.fill();
-	context.lineWidth = 1;
-	context.strokeStyle = 'white';
-	context.stroke();
+var circle1;
+
+function init(){
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	circle1 = new Circle(50, 50, 20, black);
+	//Big Circle
+	// context.beginPath();
+	// context.arc(canvas.width / 2, canvas.height / 2, 50, 0, Math.PI * 2, false);
+	// context.fillStyle = 'red';
+	// context.fill();
+	// context.lineWidth = 1;
+	// context.strokeStyle = 'red';
+	// context.stroke();
+	// context.closePath();
+
+	// //Small circle
+	// context.beginPath();
+	// context.arc(x, y, 10, 0, Math.PI * 2, false);
+	// context.fillStyle = 'white';
+	// context.fill();
+	// context.lineWidth = 1;
+	// context.strokeStyle = 'white';
+	// context.stroke();
+	// context.closePath();
+}
+
+function Circle(x, y, radius, color){
+	this.x = x;
+	this.y = y;
+	this.radius = radius;
+	this.color = color;
+
+	this.update = function(){
+		this.draw();
+	};
+
+	this.draw = function(){
+		context.beginPath();
+		context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+		context.fillStyle = this.color;
+		context.fill();
+		context.lineWidth = 1;
+		context.strokeStyle = this.color;
+		context.stroke();
+		context.closePath();
+	}
 }
 
 function boundingBoxCheck(){
-	if (x < 20) {
-		x = 20;
+	if (x < 0) {
+		x = 0;
 		vx = -vx / bounciness; 
 	}
 
-	if (y <20) {
-		y = 20;
+	if (y < 0) {
+		y = 0;
 		vy = -vy / bounciness; 
 	}
 
@@ -110,7 +137,7 @@ function boundingBoxCheck(){
 	}	
 }
 
-window.onload = draw;
+window.onload = init;
 
 </script>
 
