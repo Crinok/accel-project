@@ -62,8 +62,9 @@ if (window.DeviceMotionEvent != undefined) {
 		x = parseInt(x + vx / 50);
 		
 		boundingBoxCheck();
+		circle1.update();
 		init();
-		//circle1.update();
+		
 		
 	}, frameRate);
 } 
