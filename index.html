@@ -63,7 +63,7 @@ if (window.DeviceMotionEvent != undefined) {
 
 		boundingBoxCheck();
 		init();
-		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY < ball.radius + hole1.radius)){
+		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY > ball.radius + hole1.radius)){
 			hole1.color = "red";
 		}
 		else{
