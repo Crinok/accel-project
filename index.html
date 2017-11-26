@@ -13,14 +13,14 @@ body {
 }
 
 #div1{
-	width: 200px;
-	height: 200px;
+	width: 100px;
+	height: 100px;
 	background: #fff;
 	border-radius: 5px;
 	position: fixed;
 	top: calc( 50% - 100px );
 	left: calc( 50% - 100px );
-	display: none;
+	display: block;
 }
 
 </style>
@@ -77,12 +77,33 @@ if (window.DeviceMotionEvent != undefined) {
 		init();
 
 		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) < ball.radius + hole1.radius){
-			hole1.color = "red";
 			div1.style.display = "block";
 		}
 		else{
-			hole1.color = "#180c04";
+			div1.style.display = "none";
 		}
+
+		if(getDistance(ball.posX, ball.posY, hole2.posX, hole1.posY) < ball.radius + hole2.radius){
+			div1.style.display = "block";
+		}
+		else{
+			div1.style.display = "none";
+		}
+
+		if(getDistance(ball.posX, ball.posY, hole3.posX, hole1.posY) < ball.radius + hole3.radius){
+			div1.style.display = "block";
+		}
+		else{
+			div1.style.display = "none";
+		}
+
+		if(getDistance(ball.posX, ball.posY, hole4.posX, hole1.posY) < ball.radius + hole4.radius){
+			div1.style.display = "block";
+		}
+		else{
+			div1.style.display = "none";
+		}
+
 		console.log(ball.radius + hole1.radius);
 		hole1.update();
 		hole2.update();
