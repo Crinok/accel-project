@@ -68,11 +68,15 @@ if (window.DeviceMotionEvent != undefined) {
 		hole3.update();
 		hole4.update();
 		ball.update();
+
+		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY < ball.radius + hole1.radius){
+			hole1.color = "red";
+		}
+		else{
+			hole1.color = "#180c04";
+		}
 		
-
 	}, frameRate);
-
-	
 } 
 
 var ball, hole1, hole2, hole3, hole4;
@@ -84,6 +88,13 @@ function init(){
 	hole2 = new Circle(canvas.width - 20, canvas.height / 2, 20, '#180c04');
 	hole3 = new Circle(canvas.width / 2, canvas.height - 20, 20, '#180c04');
 	hole4 = new Circle(20, canvas.height / 2, 20, '#180c04');
+}
+
+function getDistance(x1, y1, x2, y2){
+	var xDistance = x2 - x1;
+	var yDistance = y2 - y1;
+
+	return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
 }
 
 function Circle(posX, posY, radius, color){
@@ -106,7 +117,6 @@ function Circle(posX, posY, radius, color){
 		context.stroke();
 		context.closePath();
 	};
-
 }
 
 function boundingBoxCheck(){
@@ -128,9 +138,6 @@ function boundingBoxCheck(){
 		y = document.documentElement.clientHeight-20;
 		vy = -vy / bounciness; 
 	}	
-
-
-
 }
 
 window.onload = init;
