@@ -94,9 +94,9 @@ function init(){
 	// context.closePath();
 }
 
-function Circle(x, y, radius, color){
-	this.x = x;
-	this.y = y;
+function Circle(a, b, radius, color){
+	this.a = a;
+	this.b = b;
 	this.radius = radius;
 	this.color = color;
 
@@ -106,7 +106,7 @@ function Circle(x, y, radius, color){
 
 	this.draw = function(){
 		context.beginPath();
-		context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+		context.arc(this.a, this.b, this.radius, 0, Math.PI * 2, false);
 		context.fillStyle = this.color;
 		context.fill();
 		context.lineWidth = 1;
