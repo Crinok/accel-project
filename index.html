@@ -149,8 +149,8 @@ if (window.DeviceMotionEvent != undefined) {
 		ball.update();
 
 		if(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY) > outsideCircle.radius){
-			// ball.posX = ball.posX;
-			// ball.posY = ball.posY;
+			ball.posX = ball.posX;
+			ball.posY = ball.posY;
 		}
 
 	}, frameRate);
@@ -161,7 +161,7 @@ var ball, hole1, hole2, hole3, hole4, outsideCircle;
 function init(){
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
-	ball = new Circle(x + 200, y , 10, "white");
+	ball = new Circle(x, y, 10, "white");
 	hole1 = new Circle(canvas.width / 2, 20, 20, '#180c04');
 	hole2 = new Circle(canvas.width - 20, canvas.height / 2, 20, '#180c04');
 	hole3 = new Circle(canvas.width / 2, canvas.height - 20, 20, '#180c04');
