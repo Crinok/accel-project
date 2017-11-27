@@ -149,8 +149,8 @@ if (window.DeviceMotionEvent != undefined) {
 		ball.update();
 
 		if(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY) > outsideCircle.radius){
-			x = ball.posX;
-			y = ball.posY;
+			x = ball.posX - 10;
+			y = ball.posY - 10;
 			vx = -vx / bounciness;
 			vy = -vy / bounciness;
 		}
