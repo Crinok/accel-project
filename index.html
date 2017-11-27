@@ -111,7 +111,8 @@ if (window.DeviceMotionEvent != undefined) {
 		init();
 
 		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) < ball.radius + hole1.radius){
-			div1.style.display = "block";
+			vx = -vx / bounciness;
+			vy = -vy / bounciness; 
 		}
 		else if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) > ball.radius + hole1.radius){
 			div1.style.display = "none";
