@@ -148,9 +148,11 @@ if (window.DeviceMotionEvent != undefined) {
 		hole4.update();
 		ball.update();
 
+		console.log(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY));
+
 		if(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY) > outsideCircle.radius){
-			x = ball.posX - 10;
-			y = ball.posY - 10;
+			x = x - 100;
+			y = y - 100;
 			vx = -vx / bounciness;
 			vy = -vy / bounciness;
 		}
