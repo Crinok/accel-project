@@ -175,10 +175,10 @@ if (window.DeviceMotionEvent != undefined) {
 		// }
 
 		drawBorder();
-		drawPoint(0,0.1);
-		drawPoint(0,1.5);
-		drawPoint(180,1);
-		drawPoint(45,0.5);
+		// drawPoint(0,0.1);
+		// drawPoint(0,1.5);
+		// drawPoint(180,1);
+		drawPoint(45,1);
 		// outsideCircle.update();
 		hole1.update();
 		hole2.update();
@@ -317,7 +317,13 @@ function boundingBoxCheck(){
 		y = document.documentElement.clientHeight-20;
 		vy = -vy / bounciness; 
 	}	
-
+	
+	if(x == new drawPoint(45,1).posX || y == new drawPoint(45,1).posY){
+		x = new drawPoint(45,1).posX;
+		y = new drawPoint(45,1).posY;
+		vx = -vx / bounciness; 
+		vy = -vy / bounciness;
+	}
 	// for(var i = 0; i < 360; i += 1){
 	// 	if(x == new pointAlongPath(i, 1).posX){
 	// 		x = new pointAlongPath(i, 1).posX;
