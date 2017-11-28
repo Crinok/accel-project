@@ -162,7 +162,15 @@ if (window.DeviceMotionEvent != undefined) {
 			div4.style.display = "none";
 		}
 
-		
+		ballBorder.forEach(function(e){
+			e.posX
+			if(getDistance(ball.posX, ball.posY, e.posX, e.posY) < ball.radius + e.radius){
+				x = x;
+				y = y;
+				vx = -vx / bounciness;
+				vy = -vy / bounciness;
+			}
+		});
 		
 
 		// for(var count = 0; count < 360; count+= 20){
@@ -178,25 +186,15 @@ if (window.DeviceMotionEvent != undefined) {
 		// drawPoint(0,0.1);
 		// drawPoint(0,1.5);
 		// drawPoint(180,1);
-		drawPoint(45,1);
-		// outsideCircle.update();
+		for(var i = 0; i < 360; i+=10){
+			ballBorder[i] = new drawPoint(i, 1.2);
+		}
+		
 		hole1.update();
 		hole2.update();
 		hole3.update();
 		hole4.update();
 		ball.update();
-		// ball2.update();
-
-		
-
-		// console.log(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY));
-
-		// if(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY) > outsideCircle.radius - 10){
-		// 	x = x;
-		// 	y = y;
-		// 	vx = -vx / bounciness;
-		// 	vy = -vy / bounciness;
-		// }
 
 	}, frameRate);
 } 
@@ -209,13 +207,6 @@ function init(){
 	hole2 = new Circle(canvas.width - 20, centerPivotY, 20, '#180c04');
 	hole3 = new Circle(centerPivotX, canvas.height - 20, 20, '#180c04');
 	hole4 = new Circle(20, centerPivotY, 20, '#180c04');
-
-	context.fillStyle = "red";	
-	context.fillRect(0, 0, canvas.width, canvas.height);
-
-	for(var i = 0; i < 2; i++){
-		ballBorder[i] = new ballCircumference(i, 1);	
-	}
 
 	ballBorder.forEach(function(item){
 		var imageData = context.getImageData(item.posX, item.posY, 1, 1);
@@ -280,7 +271,7 @@ function drawBorder(){
 //     this.posY = y;
 // 	this.radius = radius;
 // 	context.beginPath();
-//     context.arc(x, y, 5, 0, 2 * Math.PI);
+//     context.arc(x, y, 25, 0, 2 * Math.PI);
 //     context.fill();
 // }
 
@@ -291,8 +282,9 @@ function drawPoint(angle, distanceFromCenter){
     this.posY = y;
 	this.radius = radius;
 	context.beginPath();
-    context.arc(x, y, 1, 0, 2 * Math.PI);
-    context.fill();
+    context.arc(x, y, 25, 0, 2 * Math.PI);
+    context.strokeStyle = 'white';
+    context.stroke();
 }
 
 function pointAlongPath(angle, distanceFromCenter){
@@ -329,13 +321,6 @@ function boundingBoxCheck(){
 		y = document.documentElement.clientHeight-20;
 		vy = -vy / bounciness; 
 	}	
-	
-	if(x == new pointAlongPath(1,1).posX && y == new pointAlongPath(1,1).posY){
-		x = new pointAlongPath(1,1).posX - 10;
-		y = new pointAlongPath(1,1).posY - 10;
-		vx = -vx / bounciness; 
-		vy = -vy / bounciness;
-	}
 	
 }
 
