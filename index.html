@@ -318,7 +318,7 @@ function boundingBoxCheck(){
 		vy = -vy / bounciness; 
 	}	
 	
-	if(x > new pointAlongPath(45,1).posX && y > new pointAlongPath(45,1).posY){
+	if(x == new pointAlongPath(45,1).posX && y == new pointAlongPath(45,1).posY){
 		x = new pointAlongPath(45,1).posX - 10;
 		y = new pointAlongPath(45,1).posY - 10;
 		vx = -vx / bounciness; 
