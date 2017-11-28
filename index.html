@@ -324,16 +324,15 @@ function boundingBoxCheck(){
 		vx = -vx / bounciness; 
 		vy = -vy / bounciness;
 	}
-	// for(var i = 0; i < 360; i += 1){
-	// 	if(x == new pointAlongPath(i, 1).posX){
-	// 		x = new pointAlongPath(i, 1).posX;
-	// 		vx = -vx / bounciness;
-	// 	}
-	// 	if(x == new pointAlongPath(i, 1).posY){
-	// 		y = new pointAlongPath(i, 1).posY;
-	// 		vy = -vy / bounciness;
-	// 	}
-	// }
+	for(var i = 0; i < 45; i += 1){
+		if(x > new pointAlongPath(i, 1).posX && new pointAlongPath(i, 1).posY){
+			x = new pointAlongPath(i, 1).posX - 10;
+			y = new pointAlongPath(i,1).posY - 10;
+			vx = -vx / bounciness; 
+			vy = -vy / bounciness;
+		}
+		
+	}
 }
 
 window.onload = init;
