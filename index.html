@@ -318,21 +318,13 @@ function boundingBoxCheck(){
 		vy = -vy / bounciness; 
 	}	
 	
-	if(x > new drawPoint(45,1).posX && y > new drawPoint(45,1).posY){
-		x = new drawPoint(45,1).posX - 10;
-		y = new drawPoint(45,1).posY - 10;
+	if(x > new pointAlongPath(45,1).posX && y > new pointAlongPath(45,1).posY){
+		x = new pointAlongPath(45,1).posX - 10;
+		y = new pointAlongPath(45,1).posY - 10;
 		vx = -vx / bounciness; 
 		vy = -vy / bounciness;
 	}
-	for(var i = 0; i < 45; i += 1){
-		if(x > new pointAlongPath(i, 1).posX && new pointAlongPath(i, 1).posY){
-			x = new pointAlongPath(i, 1).posX - 10;
-			y = new pointAlongPath(i,1).posY - 10;
-			vx = -vx / bounciness; 
-			vy = -vy / bounciness;
-		}
-		
-	}
+	
 }
 
 window.onload = init;
