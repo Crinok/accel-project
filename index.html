@@ -148,14 +148,14 @@ if (window.DeviceMotionEvent != undefined) {
 		}
 
 
-		// for(var count = 0; count < 360; count++){
-		// 	if(getDistance(ball.posX, ball.posY, borders[count].posX, borders[count].posY) < ball.radius + borders[count].radius){
-		// 		x = x;
-		// 		y = y;
-		// 		vx = -vx / bounciness;
-		// 		vy = -vy / bounciness;
-		// 	}
-		// }
+		for(var count = 0; count < 360; count++){
+			if(getDistance(ball.posX, ball.posY, borders[count].posX, borders[count].posY) < ball.radius + borders[count].radius){
+				x = x;
+				y = y;
+				vx = -vx / bounciness;
+				vy = -vy / bounciness;
+			}
+		}
 
 		drawBorder();
 		drawPoint(0,0.1);
