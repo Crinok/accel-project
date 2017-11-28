@@ -164,12 +164,12 @@ if (window.DeviceMotionEvent != undefined) {
 
 		ballBorder.forEach(function(e){
 			e.posX
-			if(getDistance(ball.posX, ball.posY, e.posX, e.posY) < ball.radius + e.radius){
-				x = x;
-				y = y;
-				vx = -vx / bounciness;
-				vy = -vy / bounciness;
-			}
+			// if(getDistance(ball.posX, ball.posY, e.posX, e.posY) < ball.radius + e.radius){
+			// 	x = x;
+			// 	y = y;
+			// 	vx = -vx / bounciness;
+			// 	vy = -vy / bounciness;
+			// }
 		});
 		
 
@@ -283,7 +283,7 @@ function drawPoint(angle, distanceFromCenter){
 	this.radius = radius;
 	context.beginPath();
     context.arc(x, y, 25, 0, 2 * Math.PI);
-    context.strokeStyle = 'white';
+    context.strokeStyle = 'transparent';
     context.stroke();
 }
 
