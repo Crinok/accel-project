@@ -93,7 +93,6 @@ var radius = 100;
 var ball, ball2, hole1, hole2, hole3, hole4, border, outsideCircle;
 var borders = [];
 
-//var rangeX, rangeY;
 
 if (window.DeviceMotionEvent != undefined) {
 	window.ondevicemotion = function(e) {
@@ -163,6 +162,8 @@ if (window.DeviceMotionEvent != undefined) {
 			div4.style.display = "none";
 		}
 
+		
+		
 
 		// for(var count = 0; count < 360; count+= 20){
 		// 	if(getDistance(ball.posX, ball.posY, borders[count].posX, borders[count].posY) < ball.radius + borders[count].radius){
@@ -212,9 +213,7 @@ function init(){
 	hole4 = new Circle(20, centerPivotY, 20, '#180c04');
 	// outsideCircle = new Circle(centerPivotX, centerPivotY, 100, 'red');
 
-	for(var i = 0; i < 360; i += 20){
-		borders[i] = new drawPoint(i, 1);
-	}
+	
 	
 	// xp = ((outsideCircle.posX) + outsideCircle.radius) + (100 * Math.sin((Math.PI * 2 * (90)) / 360));
 	// yp = ((outsideCircle.posY) + outsideCircle.radius) - (100 * (1 - Math.cos((Math.PI * 2 * (90)) / 360)));
@@ -254,7 +253,7 @@ function Circle(posX, posY, radius, color){
 function drawBorder(){
     context.beginPath();
     context.arc(centerPivotX, centerPivotY, radius, 0, Math.PI * 2);
-    context.strokeStyle = 'rgb(255, 0, 0, 1)';
+    context.strokeStyle = 'white';
     context.stroke();
 }
 
@@ -267,6 +266,13 @@ function drawPoint(angle, distanceFromCenter){
 	context.beginPath();
     context.arc(x, y, 5, 0, 2 * Math.PI);
     context.fill();
+}
+
+function pointAlongPath(angle, distanceFromCenter){
+    var x = centerPivotX + radius * Math.cos(-angle*Math.PI/180) * distanceFromCenter;
+	var y = centerPivotY + radius * Math.sin(-angle*Math.PI/180) * distanceFromCenter;
+    this.posX = x;
+    this.posY = y;
 }
 
 //Execution
@@ -311,6 +317,17 @@ function boundingBoxCheck(){
 		y = document.documentElement.clientHeight-20;
 		vy = -vy / bounciness; 
 	}	
+
+	for(var i = 0; i < 360; i += 1){
+		if(x > new pointAlongPath(i, 1).posX){
+			x = x;
+			vx = -vx / bounciness;
+		}
+		if(x > new pointAlongPath(i, 1).posY){
+			y = y;
+			vy = -vy / bounciness;
+		}
+	}
 }
 
 window.onload = init;
