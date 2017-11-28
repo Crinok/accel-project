@@ -81,10 +81,18 @@ var canvas = document.createElement('canvas');
 	canvas.width = document.documentElement.clientWidth;
 	canvas.height = document.documentElement.clientHeight;
 
+var centerPivotX = canvas.width / 2;
+var centerPivotY = canvas.height / 2;
+
 var content = document.getElementById("content");
 	content.appendChild(canvas);
 
 var context = canvas.getContext("2d");
+var radius = 200;
+
+var ball, ball2, hole1, hole2, hole3, hole4, border, outsideCircle;
+var xP, yP;
+var borders = [];
 
 //var rangeX, rangeY;
 
@@ -140,37 +148,63 @@ if (window.DeviceMotionEvent != undefined) {
 			div4.style.display = "none";
 		}
 
-		
-		outsideCircle.update();
-		hole1.update();
-		hole2.update();
-		hole3.update();
-		hole4.update();
-		ball.update();
 
-		console.log(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY));
-
-		if(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY) > outsideCircle.radius - 10){
-			x = x;
-			y = y;
-			vx = -vx / bounciness;
-			vy = -vy / bounciness;
+		for(var count = 0; count < 360; count++){
+			if(getDistance(ball.posX, ball.posY, borders[count].posX, borders[count].posY) < ball.radius + borders[count].radius){
+				x = x;
+				y = y;
+				vx = -vx / bounciness;
+				vy = -vy / bounciness;
+			}
 		}
+
+		drawBorder();
+		drawPoint(0,0.1);
+		drawPoint(0,1.5);
+		drawPoint(180,1);
+		drawPoint(45,0.5);
+		// outsideCircle.update();
+		// hole1.update();
+		// hole2.update();
+		// hole3.update();
+		// hole4.update();
+		ball.update();
+		// ball2.update();
+
+		// for(var i = 0; i < 1; ++i){
+		// 	borders[i].update();
+		// }
+
+		// console.log(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY));
+
+		// if(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY) > outsideCircle.radius - 10){
+		// 	x = x;
+		// 	y = y;
+		// 	vx = -vx / bounciness;
+		// 	vy = -vy / bounciness;
+		// }
 
 	}, frameRate);
 } 
-
-var ball, hole1, hole2, hole3, hole4, outsideCircle;
 
 function init(){
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
 	ball = new Circle(x, y, 10, "white");
-	hole1 = new Circle(canvas.width / 2, 20, 20, '#180c04');
-	hole2 = new Circle(canvas.width - 20, canvas.height / 2, 20, '#180c04');
-	hole3 = new Circle(canvas.width / 2, canvas.height - 20, 20, '#180c04');
-	hole4 = new Circle(20, canvas.height / 2, 20, '#180c04');
-	outsideCircle = new Circle(canvas.width / 2, canvas.height / 2, 100, 'black');
+	hole1 = new Circle(centerPivotX, 20, 20, '#180c04');
+	hole2 = new Circle(canvas.width - 20, centerPivotY, 20, '#180c04');
+	hole3 = new Circle(centerPivotX, canvas.height - 20, 20, '#180c04');
+	hole4 = new Circle(20, centerPivotY, 20, '#180c04');
+	// outsideCircle = new Circle(centerPivotX, centerPivotY, 100, 'red');
+
+	for(var i = 0; i < 360; i += 1){
+		borders[i] = new drawPoint(i, 1);
+	}
+	
+	// xp = ((outsideCircle.posX) + outsideCircle.radius) + (100 * Math.sin((Math.PI * 2 * (90)) / 360));
+	// yp = ((outsideCircle.posY) + outsideCircle.radius) - (100 * (1 - Math.cos((Math.PI * 2 * (90)) / 360)));
+	// ball2 = new Circle(xp, yp, 20, 'blue');
+
 }
 
 function getDistance(x1, y1, x2, y2){
@@ -201,6 +235,46 @@ function Circle(posX, posY, radius, color){
 		context.closePath();
 	};
 }
+
+function drawBorder(){
+    context.beginPath();
+    context.arc(centerPivotX, centerPivotY, radius, 0, Math.PI * 2);
+    context.stroke();
+}
+
+function drawPoint(angle, distanceFromCenter){
+    var x = centerPivotX + radius * Math.cos(-angle*Math.PI/180) * distanceFromCenter;
+	var y = centerPivotY + radius * Math.sin(-angle*Math.PI/180) * distanceFromCenter;
+    this.posX = x;
+    this.posY = y;
+	this.radius = radius;
+	context.beginPath();
+    context.arc(x, y, 4, 0, 2 * Math.PI);
+    context.fill();
+}
+
+//Execution
+
+
+// function BoundaryAt(location){
+// 	this.posX = canvas.width / 2;
+// 	this.posY = canvas.height / 2;
+// 	this.radius = 100;
+// 	this.color = 'red';
+
+// 	this.update = function(){
+// 		this.draw();
+// 	};
+
+// 	this.draw = function(){
+// 		context.beginPath();
+// 		context.arc(this.posX, this.posY, this.radius, (Math.PI * 2 * (location - 1)) / 360, (Math.PI * 2 * location) / 360, false);
+// 		context.lineWidth = 10;
+// 		context.strokeStyle = this.color;
+// 		context.stroke();
+// 		context.closePath();
+// 	};
+// }
 
 function boundingBoxCheck(){
 	if (x < 20) {
