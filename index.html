@@ -318,16 +318,16 @@ function boundingBoxCheck(){
 		vy = -vy / bounciness; 
 	}	
 
-	for(var i = 0; i < 360; i += 1){
-		if(x == new pointAlongPath(i, 1).posX){
-			x = new pointAlongPath(i, 1).posX;
-			vx = -vx / bounciness;
-		}
-		if(x == new pointAlongPath(i, 1).posY){
-			y = new pointAlongPath(i, 1).posY;
-			vy = -vy / bounciness;
-		}
-	}
+	// for(var i = 0; i < 360; i += 1){
+	// 	if(x == new pointAlongPath(i, 1).posX){
+	// 		x = new pointAlongPath(i, 1).posX;
+	// 		vx = -vx / bounciness;
+	// 	}
+	// 	if(x == new pointAlongPath(i, 1).posY){
+	// 		y = new pointAlongPath(i, 1).posY;
+	// 		vy = -vy / bounciness;
+	// 	}
+	// }
 }
 
 window.onload = init;
