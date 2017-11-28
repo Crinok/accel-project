@@ -88,10 +88,9 @@ var content = document.getElementById("content");
 	content.appendChild(canvas);
 
 var context = canvas.getContext("2d");
-var radius = 100;
+var radius = 50;
 
 var ball, ball2, hole1, hole2, hole3, hole4, border, outsideCircle;
-var xP, yP;
 var borders = [];
 
 //var rangeX, rangeY;
@@ -249,7 +248,7 @@ function drawPoint(angle, distanceFromCenter){
     this.posY = y;
 	this.radius = radius;
 	context.beginPath();
-    context.arc(x, y, 4, 0, 2 * Math.PI);
+    context.arc(x, y, 2, 0, 2 * Math.PI);
     context.fill();
 }
 
