@@ -151,8 +151,8 @@ if (window.DeviceMotionEvent != undefined) {
 		console.log(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY));
 
 		if(getDistance(ball.posX, ball.posY, outsideCircle.posX, outsideCircle.posY) > outsideCircle.radius){
-			x = x - 100;
-			y = y - 100;
+			x = x;
+			y = y;
 			vx = -vx / bounciness;
 			vy = -vy / bounciness;
 		}
