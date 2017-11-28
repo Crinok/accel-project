@@ -148,7 +148,7 @@ if (window.DeviceMotionEvent != undefined) {
 		}
 
 
-		for(var count = 0; count < 360; count++){
+		for(var count = 0; count < 360; count+= 20){
 			if(getDistance(ball.posX, ball.posY, borders[count].posX, borders[count].posY) < ball.radius + borders[count].radius){
 				x = x;
 				y = y;
@@ -238,6 +238,7 @@ function Circle(posX, posY, radius, color){
 function drawBorder(){
     context.beginPath();
     context.arc(centerPivotX, centerPivotY, radius, 0, Math.PI * 2);
+    context.strokeStyle = 'rgb(255, 0, 0, 1)';
     context.stroke();
 }
 
