@@ -5,11 +5,16 @@
 <title>Accelerometer Project</title>
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <style>
-*{
-	margin:0; padding: 0;
-}
 body {
-	background: #52acc6; font-family: helvetica, arial, sans serif;
+	background: #00bb72; font-family: helvetica, arial, sans serif;
+}
+#ball {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-radius: 20px;
+	-webkit-radius: 20px;
+	background-color: #fff;
 }
 
 #div1{
@@ -49,20 +54,16 @@ body {
 	left: calc( 50% - 50px );
 	display: none;
 }
-
 </style>
 </head>
 
 <body>
-
 <div id="content">
-	<div id="div1"></div>
-	<div id="div2"></div>
-	<div id="div3"></div>
-	<div id="div4"></div>
-</div>
+    <div id="ball"></div>
 
+</div>
 <script type="text/javascript">
+
 var x = document.documentElement.clientWidth / 2, y = document.documentElement.clientHeight / 2;
 var vx = 0, vy = 0,
 	ax = 0, ay = 0;
@@ -70,36 +71,15 @@ var acceleration = 7;
 var bounciness = 8;
 var frameRate = 25;
 var gravity = 0.97;
-
-var div1 = document.getElementById("div1");
-var div2 = document.getElementById("div2");
-var div3 = document.getElementById("div3");
-var div4 = document.getElementById("div4");
-
-var canvas = document.createElement('canvas');
-	canvas.id = "cnvs";
-	canvas.width = document.documentElement.clientWidth;
-	canvas.height = document.documentElement.clientHeight;
-
-var centerPivotX = canvas.width / 2;
-var centerPivotY = canvas.height / 2;
-
-var content = document.getElementById("content");
-	content.appendChild(canvas);
-
-var context = canvas.getContext("2d");
-var radius = 100;
-
-var ball, ball2, hole1, hole2, hole3, hole4, border, outsideCircle;
-var ballBorder = [];
-
+	
+var ball = document.getElementById("ball");
 
 if (window.DeviceMotionEvent != undefined) {
 	window.ondevicemotion = function(e) {
 		ax = event.accelerationIncludingGravity.x * - acceleration;
 		ay = event.accelerationIncludingGravity.y * - acceleration;
 	}
-	
+
 	setInterval( function() {
 		var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
 		if (landscapeOrientation) {
@@ -114,202 +94,24 @@ if (window.DeviceMotionEvent != undefined) {
 		vy = vy * gravity;
 		y = parseInt(y + vy / 50);
 		x = parseInt(x + vx / 50);
-
+		
 		boundingBoxCheck();
-		init();
-
-		if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) < ball.radius + hole1.radius){
-			div1.style.display = "block";
-				x = x;
-				y = y;
-				vx = -vx / bounciness;
-				vy = -vy / bounciness;
-		}
-		else if(getDistance(ball.posX, ball.posY, hole1.posX, hole1.posY) > ball.radius + hole1.radius){
-			div1.style.display = "none";
-		}
-
-		if(getDistance(ball.posX, ball.posY, hole2.posX, hole2.posY) < ball.radius + hole2.radius){
-			div2.style.display = "block";
-			x = x;
-			y = y;
-			vx = -vx / bounciness;
-			vy = -vy / bounciness;
-		}
-		else if(getDistance(ball.posX, ball.posY, hole2.posX, hole2.posY) > ball.radius + hole2.radius){
-			div2.style.display = "none";
-		}
-
-		if(getDistance(ball.posX, ball.posY, hole3.posX, hole3.posY) < ball.radius + hole3.radius){
-			div3.style.display = "block";
-			x = x;
-			y = y;
-			vx = -vx / bounciness;
-			vy = -vy / bounciness;
-		}
-		else if(getDistance(ball.posX, ball.posY, hole3.posX, hole3.posY) > ball.radius + hole3.radius){
-			div3.style.display = "none";
-		}
-
-		if(getDistance(ball.posX, ball.posY, hole4.posX, hole4.posY) < ball.radius + hole4.radius){
-			div4.style.display = "block";
-			x = x;
-			y = y;
-			vx = -vx / bounciness;
-			vy = -vy / bounciness;
-		}
-		else if(getDistance(ball.posX, ball.posY, hole4.posX, hole4.posY) > ball.radius + hole4.radius){
-			div4.style.display = "none";
-		}
-
-		ballBorder.forEach(function(e){
-			e.posX
-			// if(getDistance(ball.posX, ball.posY, e.posX, e.posY) < ball.radius + e.radius){
-			// 	x = x;
-			// 	y = y;
-			// 	vx = -vx / bounciness;
-			// 	vy = -vy / bounciness;
-			// }
-		});
 		
-
-		// for(var count = 0; count < 360; count+= 20){
-		// 	if(getDistance(ball.posX, ball.posY, borders[count].posX, borders[count].posY) < ball.radius + borders[count].radius){
-		// 		x = x;
-		// 		y = y;
-		// 		vx = -vx / bounciness;
-		// 		vy = -vy / bounciness;
-		// 	}
-		// }
-
-		drawBorder();
-		// drawPoint(0,0.1);
-		// drawPoint(0,1.5);
-		// drawPoint(180,1);
-		for(var i = 0; i < 360; i+=10){
-			ballBorder[i] = new drawPoint(i, 1.2);
-		}
+		ball.style.top = y + "px";
+		ball.style.left = x + "px";
 		
-		hole1.update();
-		hole2.update();
-		hole3.update();
-		hole4.update();
-		ball.update();
-
 	}, frameRate);
 } 
 
-function init(){
-	context.clearRect(0, 0, canvas.width, canvas.height);
-
-	ball = new Circle(x, y, 10, "white");
-	hole1 = new Circle(centerPivotX, 20, 20, '#180c04');
-	hole2 = new Circle(canvas.width - 20, centerPivotY, 20, '#180c04');
-	hole3 = new Circle(centerPivotX, canvas.height - 20, 20, '#180c04');
-	hole4 = new Circle(20, centerPivotY, 20, '#180c04');
-
-	ballBorder.forEach(function(item){
-		var imageData = context.getImageData(item.posX, item.posY, 1, 1);
-		
-		for (var i=0;i<imageData.data.length;i+=4){
-         var red = imageData.data[i];
-         var green = imageData.data[i+1];
-         var blue = imageData.data[i+2]
-
-         if(red == 255 && green == 255 && blue == 255)
-         {
-         	x = x;
-         	y = x;
-			vx = -vx / bounciness;
-			vy = -vy / bounciness;
-         }
-      }
-	});
-	
-}
-
-function getDistance(x1, y1, x2, y2){
-	var xDistance = x2 - x1;
-	var yDistance = y2 - y1;
-
-	return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
-}
-
-function Circle(posX, posY, radius, color){
-	this.posX = posX;
-	this.posY = posY;
-	this.radius = radius;
-	this.color = color;
-
-	this.update = function(){
-		this.draw();
-	};
-
-	this.draw = function(){
-		context.beginPath();
-		context.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2, false);
-		context.fillStyle = this.color;
-		context.fill();
-		context.lineWidth = 1;
-		context.strokeStyle = this.color;
-		context.stroke();
-		context.closePath();
-	};
-}
-
-function drawBorder(){
-    context.beginPath();
-    context.arc(centerPivotX, centerPivotY, radius, 0, Math.PI * 2);
-    context.strokeStyle = 'white';
-    context.stroke();
-}
-
-// function drawPoint(angle, distanceFromCenter){
-//     var x = centerPivotX + radius * Math.cos(-angle*Math.PI/180) * distanceFromCenter;
-// 	var y = centerPivotY + radius * Math.sin(-angle*Math.PI/180) * distanceFromCenter;
-//     this.posX = x;
-//     this.posY = y;
-// 	this.radius = radius;
-// 	context.beginPath();
-//     context.arc(x, y, 25, 0, 2 * Math.PI);
-//     context.fill();
-// }
-
-function drawPoint(angle, distanceFromCenter){
-    var x = centerPivotX + radius * Math.cos(-angle*Math.PI/180) * distanceFromCenter;
-	var y = centerPivotY + radius * Math.sin(-angle*Math.PI/180) * distanceFromCenter;
-    this.posX = x;
-    this.posY = y;
-	this.radius = radius;
-	context.beginPath();
-    context.arc(x, y, 25, 0, 2 * Math.PI);
-    context.strokeStyle = 'transparent';
-    context.stroke();
-}
-
-function pointAlongPath(angle, distanceFromCenter){
-    var x = centerPivotX + radius * Math.cos(-angle*Math.PI/180) * distanceFromCenter;
-	var y = centerPivotY + radius * Math.sin(-angle*Math.PI/180) * distanceFromCenter;
-    this.posX = x;
-    this.posY = y;
-}
-
-function ballCircumference(angle, distanceFromCenter){
-    var x = ball.posX + 10 * Math.cos(-angle*Math.PI/180) * distanceFromCenter;
-	var y = ball.posY + 10 * Math.sin(-angle*Math.PI/180) * distanceFromCenter;
-    this.posX = x;
-    this.posY = y;
-}
-
 
 function boundingBoxCheck(){
-	if (x < 20) {
-		x = 20;
+	if (x < 0) {
+		x = 0;
 		vx = -vx / bounciness; 
 	}
 
-	if (y < 20) {
-		y = 20;
+	if (y < 0) {
+		y = 0;
 		vy = -vy / bounciness; 
 	}
 
@@ -321,11 +123,9 @@ function boundingBoxCheck(){
 		y = document.documentElement.clientHeight-20;
 		vy = -vy / bounciness; 
 	}	
-	
 }
 
-window.onload = init;
-
 </script>
+
 </body>
 </html>
