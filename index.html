@@ -11,13 +11,14 @@
 }
 
 body{
-	background-image: url(img/Bg.jpg);
-	background-repeat: no-repeat;
-    background-size: 100%;
+/*	background-image: url(img/Bg.jpg);
+	background-repeat: no-repeat;*/
+    /*background-size: 50%;*/
+    background: red;
 }
 
 #canvas{
-	border: 1px solid grey;
+	border: 1px solid white;
 }
 
 </style>
@@ -128,8 +129,7 @@ world = new b2World(
 ,  true                 //allow sleep
 );
 
-var canvas = document.getElementById("canvas").style.width = "70%";
-
+var canvas = document.getElementById("canvas");
 
 var fixDef = new b2FixtureDef;
 fixDef.density = 1.0;
