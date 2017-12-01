@@ -2,44 +2,182 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Gyro Project</title>
+<title>Accelerometer Project</title>
 <meta name="viewport" content="width=device-width,user-scalable=no" />
+<script type="text/javascript" src="js/Box2D.min.js"></script>
 <style>
-body {
-	background: #00bb72; font-family: helvetica, arial, sans serif;
+*{
+	margin:0; padding: 0;
 }
-#ball {
-	position: absolute;
-	width: 20px;
-	height: 20px;
-	border-radius: 20px;
-	-webkit-radius: 20px;
-	background-color: #fff;
+
+body{
+	background-image: url(img/Bg.jpg);
+	background-repeat: no-repeat;
+    background-size: 100%;
 }
+
+#canvas{
+	border: 1px solid grey;
+}
+
 </style>
 </head>
 
-<body>
+<body onload="init();">
+	<canvas id="canvas" width="600" height="400"></canvas>
 <div id="content">
-    <div id="ball"></div>
-
+	
 </div>
 <script type="text/javascript">
 
-var x = document.documentElement.clientWidth / 2, y = document.documentElement.clientHeight / 2,
-    vx = 0, vy = 0,
+var x, y;
+var vx = 0, vy = 0,
 	ax = 0, ay = 0;
+var acceleration = 7;
+var bounciness = 8;
 var frameRate = 25;
+var gravity = 0.97;
+
+// var canvas = document.createElement('canvas');
+// 	canvas.id = "cnvs";
+// 	canvas.width = document.documentElement.clientWidth;
+// 	canvas.height = document.documentElement.clientHeight;
+
+// var centerPivotX = canvas.width / 2;
+// var centerPivotY = canvas.height / 2;
+
+// var content = document.getElementById("content");
+// 	content.appendChild(canvas);
+// var context = canvas.getContext("2d");
+
+// var imageObj = new Image();
+// imageObj.src = 'img/Bg.jpg';
+
+// imageObj.onload = function() {
+// 	context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
+// };
+
+
+// if (window.DeviceMotionEvent != undefined) {
+// 	window.ondevicemotion = function(e) {
+// 		ax = event.accelerationIncludingGravity.x * - acceleration;
+// 		ay = event.accelerationIncludingGravity.y * - acceleration;
+// 	}
 	
-var ball = document.getElementById("ball");
+// 	setInterval( function() {
+// 		var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
+// 		if (landscapeOrientation) {
+// 			vx = vx + ay;
+// 			vy = vy + ax;
+// 		} else {
+// 			vy = vy - ay;
+// 			vx = vx + ax;
+// 		}
 
-if (window.DeviceMotionEvent != undefined) {
-	window.ondevicemotion = function(e) {
-		ax = event.accelerationIncludingGravity.x * - 9.8;
-		ay = event.accelerationIncludingGravity.y * - 9.8;
-	}
+// 		vx = vx * gravity;
+// 		vy = vy * gravity;
+// 		y = parseInt(y + vy / 50);
+// 		x = parseInt(x + vx / 50);
 
-	setInterval( function() {
+// 		boundingBoxCheck();
+// 		//init();
+
+
+// 	}, frameRate);
+// }
+
+// function boundingBoxCheck(){
+// 	if (x < 20) {
+// 		x = 20;
+// 		vx = -vx / bounciness; 
+// 	}
+
+// 	if (y < 20) {
+// 		y = 20;
+// 		vy = -vy / bounciness; 
+// 	}
+
+// 	if (x > document.documentElement.clientWidth-20) {
+// 		x = document.documentElement.clientWidth-20;
+// 		vx = -vx / bounciness; 
+// 	}
+// 	if (y > document.documentElement.clientHeight-20) {
+// 		y = document.documentElement.clientHeight-20;
+// 		vy = -vy / bounciness; 
+// 	}	
+	
+// }
+
+var world;
+
+function init() {
+ var   b2Vec2 = Box2D.Common.Math.b2Vec2
+ 	,	b2BodyDef = Box2D.Dynamics.b2BodyDef
+ 	,	b2Body = Box2D.Dynamics.b2Body
+ 	,	b2FixtureDef = Box2D.Dynamics.b2FixtureDef
+ 	,	b2Fixture = Box2D.Dynamics.b2Fixture
+ 	,	b2World = Box2D.Dynamics.b2World
+ 	,	b2MassData = Box2D.Collision.Shapes.b2MassData
+ 	,	b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
+ 	,	b2CircleShape = Box2D.Collision.Shapes.b2CircleShape
+ 	,	b2DebugDraw = Box2D.Dynamics.b2DebugDraw
+    ;
+ 
+world = new b2World(
+   new b2Vec2(x, y)    //gravity
+,  true                 //allow sleep
+);
+
+var canvas = document.getElementById("canvas").style.width = "70%";
+
+var fixDef = new b2FixtureDef;
+fixDef.density = 1.0;
+fixDef.friction = 0.5;
+fixDef.restitution = 0.11;
+
+var bodyDef = new b2BodyDef;
+
+// if (window.DeviceMotionEvent != undefined) {
+// 	window.ondevicemotion = function(e) {
+// 		ax = event.accelerationIncludingGravity.x * - acceleration;
+// 		ay = event.accelerationIncludingGravity.y * - acceleration;
+// 	}
+	
+// 	setInterval( function() {
+// 		var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
+// 		if (landscapeOrientation) {
+// 			vx = vx + ay;
+// 			vy = vy + ax;
+// 		} else {
+// 			vy = vy - ay;
+// 			vx = vx + ax;
+// 		}
+
+// 		vx = vx * gravity;
+// 		vy = vy * gravity;
+// 		y = parseInt(y + vy / 50);
+// 		x = parseInt(x + vx / 50);
+
+// 		world.Step(
+// 	       1 / 60   //frame-rate
+// 		    ,  10       //velocity iterations
+// 		    ,  10       //position iterations
+// 		);
+// 		world.DrawDebugData();
+// 		world.ClearForces();
+
+// 	}, frameRate);
+// }
+
+
+function update() {
+	if (window.DeviceMotionEvent != undefined) {
+		window.ondevicemotion = function(e) {
+			ax = event.accelerationIncludingGravity.x * - acceleration;
+			ay = event.accelerationIncludingGravity.y * - acceleration;
+		}
+		
+		// setInterval( function() {
 		var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
 		if (landscapeOrientation) {
 			vx = vx + ay;
@@ -49,41 +187,64 @@ if (window.DeviceMotionEvent != undefined) {
 			vx = vx + ax;
 		}
 
-		vx = vx * 0.98;
-		vy = vy * 0.98;
+		vx = vx * gravity;
+		vy = vy * gravity;
 		y = parseInt(y + vy / 50);
 		x = parseInt(x + vx / 50);
-		
-		boundingBoxCheck();
-		
-		ball.style.top = y + "px";
-		ball.style.left = x + "px";
-		
-	}, frameRate);
-} 
 
-
-function boundingBoxCheck(){
-	if (x < 0) {
-		x = 0;
-		vx = -vx; 
+		// }, frameRate);
 	}
 
-	if (y < 0) {
-		y = 0;
-		vy = -vy; 
-	}
+	world.Step(
+       1 / 60   //frame-rate
+    ,  10       //velocity iterations
+    ,  10       //position iterations
+	);
+	world.DrawDebugData();
+	world.ClearForces();
+};
 
-	if (x > document.documentElement.clientWidth-20) {
-		x = document.documentElement.clientWidth-20;
-		vx = -vx; 
-	}
-	if (y > document.documentElement.clientHeight-20) {
-		y = document.documentElement.clientHeight-20;
-		vy = -vy; 
-	}	
+//setup debug draw
+var debugDraw = new b2DebugDraw();
+debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
+debugDraw.SetDrawScale(30.0);
+debugDraw.SetFillAlpha(0);
+debugDraw.SetLineThickness(1.0);
+debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+world.SetDebugDraw(debugDraw);
+
+//create ground
+bodyDef.type = b2Body.b2_staticBody;
+bodyDef.position.x = 9;
+bodyDef.position.y = 13;
+fixDef.shape = new b2PolygonShape;
+fixDef.shape.SetAsBox(10, 0.5);
+world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+//create some objects
+bodyDef.type = b2Body.b2_dynamicBody;
+for(var i = 0; i < 1; ++i) {
+if(Math.random() > 0.5) {
+   fixDef.shape = new b2PolygonShape;
+   fixDef.shape.SetAsBox(
+         1  //half width
+      ,  1 //half height
+   );
+} else {
+   fixDef.shape = new b2CircleShape(
+      1 //radius
+   );
+}
+bodyDef.position.x = Math.random() * 10;
+bodyDef.position.y = Math.random() * 10;
+world.CreateBody(bodyDef).CreateFixture(fixDef);
 }
 
+ window.setInterval(update, 1000 / 60);
+};
+
+
+//window.onload = init;
 </script>
 
 </body>
