@@ -3,9 +3,15 @@ canvas.width = document.documentElement.clientWidth;
 canvas.height = document.documentElement.clientHeight;
 var ctx = canvas.getContext("2d");
 
+var x = document.documentElement.clientWidth / 2, y = document.documentElement.clientHeight / 2;
+var vx = 0, vy = 0;
+var ax, ay;
 var ball;
 var bigCircle;
 var objArray = [];
+var frameRate = 20;
+var acceleration = 7;
+var gravity = 0.97;
 
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -37,28 +43,28 @@ function wallCollision() {
 }
 
 function wallCollisionBall() {
-    // for (var obj in objArray) {
-        if (ball.x - ball.radius + ball.dx < 0 ||
-            ball.x + ball.radius + ball.dx > canvas.width) {
-            ball.dx *= -1;
-        }
-        if (ball.y - ball.radius + ball.dy < 0 ||
-            ball.y + ball.radius + ball.dy > canvas.height) {
-            ball.dy *= -1;
-        }
-        if (ball.y + ball.radius > canvas.height) {
-            ball.y = canvas.height - ball.radius;
-        }
-        if (ball.y - ball.radius < 0) {
-            ball.y = ball.radius;
-        }
-        if (ball.x + ball.radius > canvas.width) {
-            ball.x = canvas.width - ball.radius;
-        }
-        if (ball.x - ball.radius < 0) {
-            ball.x = ball.radius;
-        }
-    // }
+
+    if (ball.x - ball.radius + ball.dx < 0 ||ball.x + ball.radius + ball.dx > canvas.width) {
+        ball.dx *= -1;
+    }
+    if (ball.y - ball.radius + ball.dy < 0 ||
+        ball.y + ball.radius + ball.dy > canvas.height) {
+
+        ball.dy *= -1;
+    }
+    if (ball.y + ball.radius > canvas.height) {
+        ball.y = canvas.height - ball.radius;
+    }
+    if (ball.y - ball.radius < 0) {
+        ball.y = ball.radius;
+    }
+    if (ball.x + ball.radius > canvas.width) {
+        ball.x = canvas.width - ball.radius;
+    }
+    if (ball.x - ball.radius < 0) {
+        ball.x = ball.radius;
+    }
+
 }
 
 function ballCollision() {
@@ -100,7 +106,6 @@ function moveObjects() {
 function moveBall() {
     ball.x += ball.dx;
     ball.y += ball.dy;
-    
 }
 
 function drawObjects() {
@@ -113,37 +118,54 @@ function drawObjects() {
 
 function draw() {
     clearCanvas();
-
+    drawObjects();
     moveBall();
     moveObjects();
-    drawObjects();
+    
     ballCollision();
     wallCollisionBall()
     wallCollision();
-    requestAnimationFrame(draw);
+    // requestAnimationFrame(draw);
 }
 
-//setInterval(draw, 1000/60);
 bigCircle = new Ball(canvas.width/2, canvas.height/2, canvas.width/4, 'transparent');
 // objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
 objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "red");
-ball = new Ball(canvas.width/2, canvas.height/2, 20, "white");
+ball = new Ball(canvas.width/2, canvas.height/2, 20, "white", x, y);
 
-var ax, ay;
+
 
 if (window.DeviceMotionEvent != undefined) {
     window.ondevicemotion = function(e) {
-        ax = event.accelerationIncludingGravity.x * - 7;
-        ay = event.accelerationIncludingGravity.y * - 7;
+        ax = event.accelerationIncludingGravity.x * - acceleration;
+        ay = event.accelerationIncludingGravity.y * - acceleration;
     }
 
-    draw();
+    setInterval( function() {
+        var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
+        if (landscapeOrientation) {
+            vx = vx + ay;
+            vy = vy + ax;
+        } else {
+            vy = vy - ay;
+            vx = vx + ax;
+        }
+
+        vx = vx * gravity;
+        vy = vy * gravity;
+        y = parseInt(y + vy / 50);
+        x = parseInt(x + vx / 50);
+
+        draw();
+
+        }, frameRate
+    );
 }
 
-function Ball(x, y, radius, ballColor) {
+function Ball(x, y, radius, ballColor, a, b) {
     this.radius = radius;
-    this.dx = ax;
-    this.dy = ay;
+    this.dx = a;
+    this.dy = b;
     // mass is that of a sphere, except the constants like PI and 4/3
     // reason for sphere over circle is, well, we're looking at spheres from above, duh
     this.mass = this.radius * this.radius * this.radius;
