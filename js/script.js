@@ -3,27 +3,11 @@ canvas.width = document.documentElement.clientWidth;
 canvas.height = document.documentElement.clientHeight;
 var ctx = canvas.getContext("2d");
 
+var bigCircle;
 var objArray = [];
-var paused = false;
-var totalKineticEnergy = 0;
-var bumped = false;
-
-var leftHeld = false;
-var upHeld = false;
-var rightHeld = false;
-var downHeld = false;
-
-var gravityOn = false;
-var dragOn = false;
-var soundOn = true;
 
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-
-function canvasBackground() {
-    // canvas.style.backgroundColor = "rgb(215, 235, 240)";
 }
 
 function wallCollision() {
@@ -78,32 +62,7 @@ function ballCollision() {
         }
     }
 }
-function ballCollisionSafety() { //because i suck at coding proper collision
-    for (var obj1 in objArray) {
-        for (var obj2 in objArray) {
-            if (obj1 !== obj2 &&
-                distance(objArray[obj1], objArray[obj2]) < objArray[obj1].radius + objArray[obj2].radius) {
-                var theta = Math.atan2((objArray[obj1].y - objArray[obj2].y), (objArray[obj1].x - objArray[obj2].x));
-                var overlap = objArray[obj1].radius + objArray[obj2].radius - distance (objArray[obj1], objArray[obj2]);
-                objArray[obj1].x += overlap * Math.cos(theta);
-                objArray[obj1].y += overlap * Math.sin(theta);
-            }
-        }
-    }
-}
-function applyGravity() {
-    for (var obj in objArray) {
-        if (objArray[obj].onGround() == false) {
-            objArray[obj].dy += 0.29;
-        }   
-    }
-}
-function applyDrag() {
-    for (var obj in objArray) {
-        objArray[obj].dx *= 0.99
-        objArray[obj].dy *= 0.99
-    }
-}
+
 function moveObjects() {
     for (var obj in objArray) {
         objArray[obj].x += objArray[obj].dx;
@@ -114,41 +73,25 @@ function moveObjects() {
 
 function drawObjects() {
     for (var obj in objArray) {
+        bigCircle.draw();
         objArray[obj].draw();
     }
 }
 
 function draw() {
     clearCanvas();
-    canvasBackground();
-    if (!paused) {
-        // arrowControls();
-        if (gravityOn) {
-            applyGravity();
-            applyDrag(); }
-        moveObjects();
-        }
+
+    moveObjects();
     drawObjects();
     ballCollision();
     wallCollision();
-    // logShit();
     requestAnimationFrame(draw);
 }
 
 //setInterval(draw, 1000/60);
-objArray[objArray.length] = new Ball(canvas.width/2, canvas.height/2, 20);
-// objArray[objArray.length] = new Ball(randomX(), randomY(), randomRadius());
-// objArray[objArray.length] = new Ball(randomX(), randomY(), randomRadius());
-// objArray[objArray.length] = new Ball(randomX(), randomY(), randomRadius());
-// objArray[objArray.length] = new Ball(randomX(), randomY(), randomRadius());
+bigCircle = new Ball(canvas.width/2, canvas.height/2, 200, 'transparent');
+objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
+objArray[objArray.length] = new Ball(canvas.width, canvas.height, 20, "white");
 
 draw();
-
-function logShit() {
-    for (var obj in objArray) {
-        totalKineticEnergy += objArray[obj].kineticEnergy();
-    }
-    console.log("kinetic energy:", totalKineticEnergy.toLocaleString());
-    totalKineticEnergy = 0;
-}
 

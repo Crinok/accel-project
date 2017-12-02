@@ -1,13 +1,13 @@
-function Ball(x, y, radius) {
+function Ball(x, y, radius, ballColor) {
     this.radius = radius;
-    this.dx = randomDx();
-    this.dy = randomDy();
+    this.dx = 3;
+    this.dy = 3;
     // mass is that of a sphere, except the constants like PI and 4/3
     // reason for sphere over circle is, well, we're looking at spheres from above, duh
     this.mass = this.radius * this.radius * this.radius;
     this.x = x;
     this.y = y;
-    this.color = randomColor();
+    this.color = ballColor;
     this.draw = function() {
         ctx.beginPath();
         ctx.arc(Math.round(this.x), Math.round(this.y), this.radius, 0, 2*Math.PI);
