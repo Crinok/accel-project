@@ -89,9 +89,9 @@ function draw() {
 }
 
 //setInterval(draw, 1000/60);
-bigCircle = new Ball(canvas.width/2, canvas.height/2, 200, 'transparent');
-objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
-objArray[objArray.length] = new Ball(canvas.width, canvas.height, 20, "white");
+bigCircle = new Ball(canvas.width/2, canvas.height/2, 400, 'transparent');
+// objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
+objArray[objArray.length] = new Ball(canvas.width/2, canvas.height/2, 20, "white");
 
 draw();
 
