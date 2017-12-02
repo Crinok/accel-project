@@ -3,6 +3,7 @@ canvas.width = document.documentElement.clientWidth;
 canvas.height = document.documentElement.clientHeight;
 var ctx = canvas.getContext("2d");
 
+var ball;
 var bigCircle;
 var objArray = [];
 
@@ -33,6 +34,31 @@ function wallCollision() {
             objArray[obj].x = objArray[obj].radius;
         }
     }
+}
+
+function wallCollisionBall() {
+    // for (var obj in objArray) {
+        if (ball.x - ball.radius + ball.dx < 0 ||
+            ball.x + ball.radius + ball.dx > canvas.width) {
+            ball.dx *= -1;
+        }
+        if (ball.y - ball.radius + ball.dy < 0 ||
+            ball.y + ball.radius + ball.dy > canvas.height) {
+            ball.dy *= -1;
+        }
+        if (ball.y + ball.radius > canvas.height) {
+            ball.y = canvas.height - ball.radius;
+        }
+        if (ball.y - ball.radius < 0) {
+            ball.y = ball.radius;
+        }
+        if (ball.x + ball.radius > canvas.width) {
+            ball.x = canvas.width - ball.radius;
+        }
+        if (ball.x - ball.radius < 0) {
+            ball.x = ball.radius;
+        }
+    // }
 }
 
 function ballCollision() {
@@ -71,27 +97,36 @@ function moveObjects() {
     
 }
 
+function moveBall() {
+    ball.x += ball.dx;
+    ball.y += ball.dy;
+    
+}
+
 function drawObjects() {
     for (var obj in objArray) {
         bigCircle.draw();
         objArray[obj].draw();
+        ball.draw();
     }
 }
 
 function draw() {
     clearCanvas();
 
+    moveBall();
     moveObjects();
     drawObjects();
     ballCollision();
+    wallCollisionBall()
     wallCollision();
     requestAnimationFrame(draw);
 }
 
 //setInterval(draw, 1000/60);
-bigCircle = new Ball(canvas.width/2, canvas.height/2, 400, 'transparent');
+bigCircle = new Ball(canvas.width/2, canvas.height/2, canvas.width/4, 'transparent');
 // objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
-objArray[objArray.length] = new Ball(canvas.width/2, canvas.height/2, 20, "white");
-
+objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "red");
+ball = new Ball(canvas.width/2, canvas.height/2, 20, "white");
 draw();
 
