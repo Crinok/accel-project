@@ -25,6 +25,8 @@
   top: calc( 50% - 50px );
   left: calc( 50% - 50px );
   display: none;
+  font-size: 40px;
+  text-align: center;
 }#div2{
   width: 100px;
   height: 100px;
@@ -34,6 +36,8 @@
   top: calc( 50% - 50px );
   left: calc( 50% - 50px );
   display: none;
+  font-size: 40px;
+  text-align: center;
 }#div3{
   width: 100px;
   height: 100px;
@@ -43,6 +47,8 @@
   top: calc( 50% - 50px );
   left: calc( 50% - 50px );
   display: none;
+  font-size: 40px;
+  text-align: center;
 }#div4{
   width: 100px;
   height: 100px;
@@ -52,6 +58,8 @@
   top: calc( 50% - 50px );
   left: calc( 50% - 50px );
   display: none;
+  font-size: 40px;
+  text-align: center;
 }
 
 </style>
@@ -60,10 +68,10 @@
 <body>
 <canvas id="canvas"></canvas>
 <div id="content">
-  <div id="div1"></div>
-  <div id="div2"></div>
-  <div id="div3"></div>
-  <div id="div4"></div>
+  <div id="div1">A</div>
+  <div id="div2">B</div>
+  <div id="div3">C</div>
+  <div id="div4">D</div>
 </div>
 
 <script type="text/javascript">
@@ -95,7 +103,7 @@ var content = document.getElementById("content");
 var context = canvas.getContext("2d");
 var radius = 150;
 
-var ball, ball2, hole1, hole2, hole3, hole4, border, outsideCircle;
+var ball, ball2, hole1, hole2, hole3, hole4, border, innerCircle, outsideCircle;
 var pocket1, pocket2, pocket3, pocket4;
 var ballBorder = [];
 
@@ -132,21 +140,25 @@ if (window.DeviceMotionEvent != undefined) {
         x = x;
         y = y;
         vx = -vx / bounciness;
-        // vy = -vy / bounciness;
+        vy = -vy / bounciness;
+        ball.posX = ball.posX;
+        ball.posY = ball.posY;
+        // ball.radius = 0;
     }
     else if(getDistance(ball.posX, ball.posY, pocket1.posX, pocket1.posY) > ball.radius + pocket1.radius){
-      div1.style.display = "none";
+      // div1.style.display = "none";
     }
 
     if(getDistance(ball.posX, ball.posY, pocket2.posX, pocket2.posY) < ball.radius + pocket2.radius){
       div2.style.display = "block";
       x = x;
       y = y;
-      // vx = -vx / bounciness;
+      vx = -vx / bounciness;
       vy = -vy / bounciness;
+      ball.radius = 0;
     }
     else if(getDistance(ball.posX, ball.posY, pocket2.posX, pocket2.posY) > ball.radius + pocket2.radius){
-      div2.style.display = "none";
+      // div2.style.display = "none";
     }
 
     if(getDistance(ball.posX, ball.posY, pocket3.posX, pocket3.posY) < ball.radius + pocket3.radius){
@@ -155,9 +167,10 @@ if (window.DeviceMotionEvent != undefined) {
       y = y;
       vx = -vx / bounciness;
       vy = -vy / bounciness;
+      ball.radius = 0;
     }
     else if(getDistance(ball.posX, ball.posY, pocket3.posX, pocket3.posY) > ball.radius + pocket3.radius){
-      div3.style.display = "none";
+      // div3.style.display = "none";
     }
 
     if(getDistance(ball.posX, ball.posY, pocket4.posX, pocket4.posY) < ball.radius + pocket4.radius){
@@ -166,13 +179,15 @@ if (window.DeviceMotionEvent != undefined) {
       y = y;
       vx = -vx / bounciness;
       vy = -vy / bounciness;
+      ball.radius = 0;
     }
     else if(getDistance(ball.posX, ball.posY, pocket4.posX, pocket4.posY) > ball.radius + pocket4.radius){
-      div4.style.display = "none";
+      // div4.style.display = "none";
     }
     
     drawBorder();
     // pocket0.update();
+    innerCircle.update();
     pocket1.update();
     pocket2.update();
     pocket3.update();
@@ -183,6 +198,7 @@ if (window.DeviceMotionEvent != undefined) {
     // hole3.update();
     // hole4.update();
     ball.update();
+    
 
   }, frameRate);
 } 
@@ -191,6 +207,7 @@ function init(){
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   ball = new Circle(x, y, 10, "white");
+  innerCircle = new Circle(centerPivotX, centerPivotY, 130, "#139935");
   // hole1 = new Circle(centerPivotX, 20, 20, '#180c04');
   // hole2 = new Circle(canvas.width - 20, centerPivotY, 20, '#180c04');
   // hole3 = new Circle(centerPivotX, canvas.height - 20, 20, '#180c04');
@@ -234,7 +251,7 @@ function Circle(posX, posY, radius, color){
 function drawBorder(){
     context.beginPath();
     context.arc(centerPivotX, centerPivotY, radius, 0, Math.PI * 2);
-    context.fillStyle = 'orange';
+    context.fillStyle = '#bf7c30';
     context.fill();
     context.strokeStyle = 'white';
     context.stroke();
