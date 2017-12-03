@@ -42,10 +42,10 @@ if (window.DeviceMotionEvent != undefined) {
         vy = vy * gravity;
         y = parseInt(y + vy / 50);
         x = parseInt(x + vx / 50);
-
+clearCanvas();
         draw();
 
-        for(var i = 0; i < 360; i+=5){
+        for(var i = 0; i < 360; i+=1){
             ballBorder[i] = new drawPoint(i, 1);
         }
 
@@ -161,18 +161,18 @@ function moveObjects() {
     
 }
 
-// function moveBall() {
-//     ball.x += ball.dx;
-//     ball.y += ball.dy;
-// }
+function moveBall() {
+    ball.x += ball.dx;
+    ball.y += ball.dy;
+}
 
 function drawPoint(angle, distanceFromCenter){
     var x = centerPivotX + radius * Math.cos(-angle*Math.PI/180) * distanceFromCenter;
     var y = centerPivotY + radius * Math.sin(-angle*Math.PI/180) * distanceFromCenter;
 
-    this.radius = radius;
-    this.dx = 3;
-    this.dy = 3;
+    this.radius = 40;
+    this.dx = 1;
+    this.dy = 1;
     // mass is that of a sphere, except the constants like PI and 4/3
     // reason for sphere over circle is, well, we're looking at spheres from above, duh
     this.mass = this.radius * this.radius * this.radius;
@@ -205,14 +205,14 @@ function drawPoint(angle, distanceFromCenter){
 function drawObjects() {
     for (var obj in objArray) {
         bigCircle.draw();
-        objArray[obj].draw();  
+        // objArray[obj].draw();  
     }
 
     ball.draw();
 }
 
 function draw() {
-    clearCanvas();
+    
     boundingBoxCheck();
     ball = new Ball(x, y, 20, "white");
     drawObjects();
@@ -225,9 +225,10 @@ function draw() {
     // requestAnimationFrame(draw);
 }
 
+// ball = new Ball(x, y, 20, "white");
 bigCircle = new Ball(canvas.width/2, canvas.height/2, radius, 'transparent');
-// objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
-objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "red");
+objArray[objArray.length] = new Ball(0, canvas.height/2, 20, "transparent");
+// objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "green");
 
 
 function Ball(x, y, radius, ballColor) {
