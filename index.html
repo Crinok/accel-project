@@ -137,8 +137,8 @@ if (window.DeviceMotionEvent != undefined) {
 
     if(getDistance(ball.posX, ball.posY, pocket1.posX, pocket1.posY) < ball.radius + pocket1.radius){
       div1.style.display = "block";
-        x = pocket1.posX + pocket1.radius;
-        y = pocket1.posY + pocket1.radius;
+        x = pocket1.posX;
+        y = pocket1.posY;
         vx = -vx / bounciness;
         vy = -vy / bounciness;
         ball.radius = 0;
@@ -149,8 +149,8 @@ if (window.DeviceMotionEvent != undefined) {
 
     if(getDistance(ball.posX, ball.posY, pocket2.posX, pocket2.posY) < ball.radius + pocket2.radius){
       div2.style.display = "block";
-      x = pocket2.posX + pocket2.radius;
-      y = pocket2.posY + pocket2.radius;
+      x = pocket2.posX;
+      y = pocket2.posY;
       vx = -vx / bounciness;
       vy = -vy / bounciness;
       ball.radius = 0;
@@ -161,8 +161,8 @@ if (window.DeviceMotionEvent != undefined) {
 
     if(getDistance(ball.posX, ball.posY, pocket3.posX, pocket3.posY) < ball.radius + pocket3.radius){
       div3.style.display = "block";
-      x = pocket3.posX + pocket3.radius;
-      y = pocket3.posY + pocket3.radius;
+      x = pocket3.posX;
+      y = pocket3.posY;
       vx = -vx / bounciness;
       vy = -vy / bounciness;
       ball.radius = 0;
@@ -177,7 +177,7 @@ if (window.DeviceMotionEvent != undefined) {
         y = pocket4.posY;
         vx = -vx / bounciness;
         vy = -vy / bounciness;
-        // ball.radius = 0;
+        ball.radius = 0;
     }
     else if(getDistance(ball.posX, ball.posY, pocket4.posX, pocket4.posY) > ball.radius + pocket4.radius){
       // div4.style.display = "none";
@@ -204,7 +204,7 @@ if (window.DeviceMotionEvent != undefined) {
 function init(){
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  ball = new Circle(x, y, 10, "white");
+  ball = new Circle(x, y, 10, "red");
   innerCircle = new Circle(centerPivotX, centerPivotY, 130, "#139935");
   // hole1 = new Circle(centerPivotX, 20, 20, '#180c04');
   // hole2 = new Circle(canvas.width - 20, centerPivotY, 20, '#180c04');
