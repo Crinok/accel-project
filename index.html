@@ -124,12 +124,15 @@ if (window.DeviceMotionEvent != undefined) {
     boundingBoxCheck();
     init();
 
+
+    // console.log(pocket0.radius + pocket1.radius);
+
     if(getDistance(ball.posX, ball.posY, pocket1.posX, pocket1.posY) < ball.radius + pocket1.radius){
       div1.style.display = "block";
         x = x;
         y = y;
         vx = -vx / bounciness;
-        vy = -vy / bounciness;
+        // vy = -vy / bounciness;
     }
     else if(getDistance(ball.posX, ball.posY, pocket1.posX, pocket1.posY) > ball.radius + pocket1.radius){
       div1.style.display = "none";
@@ -139,7 +142,7 @@ if (window.DeviceMotionEvent != undefined) {
       div2.style.display = "block";
       x = x;
       y = y;
-      vx = -vx / bounciness;
+      // vx = -vx / bounciness;
       vy = -vy / bounciness;
     }
     else if(getDistance(ball.posX, ball.posY, pocket2.posX, pocket2.posY) > ball.radius + pocket2.radius){
@@ -169,6 +172,7 @@ if (window.DeviceMotionEvent != undefined) {
     }
     
     drawBorder();
+    // pocket0.update();
     pocket1.update();
     pocket2.update();
     pocket3.update();
@@ -191,7 +195,7 @@ function init(){
   // hole2 = new Circle(canvas.width - 20, centerPivotY, 20, '#180c04');
   // hole3 = new Circle(centerPivotX, canvas.height - 20, 20, '#180c04');
   // hole4 = new Circle(20, centerPivotY, 20, '#180c04');  
-
+  // pocket0 = new drawPoint(-5,1);
   pocket1 = new drawPoint(0,1);
   pocket2 = new drawPoint(90,1);
   pocket3 = new drawPoint(180,1);
