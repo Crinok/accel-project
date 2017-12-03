@@ -149,11 +149,11 @@ if (window.DeviceMotionEvent != undefined) {
 
     if(getDistance(ball.posX, ball.posY, pocket2.posX, pocket2.posY) < ball.radius + pocket2.radius){
       div2.style.display = "block";
-      x = x;
-      y = y;
+      x = pocket2.posX + pocket2.radius;
+      y = pocket2.posY + pocket2.radius;
       vx = -vx / bounciness;
       vy = -vy / bounciness;
-      // ball.radius = 0;
+      ball.radius = 0;
     }
     else if(getDistance(ball.posX, ball.posY, pocket2.posX, pocket2.posY) > ball.radius + pocket2.radius){
       // div2.style.display = "none";
@@ -161,11 +161,11 @@ if (window.DeviceMotionEvent != undefined) {
 
     if(getDistance(ball.posX, ball.posY, pocket3.posX, pocket3.posY) < ball.radius + pocket3.radius){
       div3.style.display = "block";
-      x = x;
-      y = y;
+      x = pocket3.posX + pocket3.radius;
+      y = pocket3.posY + pocket3.radius;
       vx = -vx / bounciness;
       vy = -vy / bounciness;
-      // ball.radius = 0;
+      ball.radius = 0;
     }
     else if(getDistance(ball.posX, ball.posY, pocket3.posX, pocket3.posY) > ball.radius + pocket3.radius){
       // div3.style.display = "none";
@@ -173,11 +173,11 @@ if (window.DeviceMotionEvent != undefined) {
 
     if(getDistance(ball.posX, ball.posY, pocket4.posX, pocket4.posY) < ball.radius + pocket4.radius){
       div4.style.display = "block";
-      x = x;
-      y = y;
-      vx = -vx / bounciness;
-      vy = -vy / bounciness;
-      // ball.radius = 0;
+        x = pocket4.posX;
+        y = pocket4.posY;
+        vx = -vx / bounciness;
+        vy = -vy / bounciness;
+        // ball.radius = 0;
     }
     else if(getDistance(ball.posX, ball.posY, pocket4.posX, pocket4.posY) > ball.radius + pocket4.radius){
       // div4.style.display = "none";
