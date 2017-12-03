@@ -45,7 +45,7 @@ if (window.DeviceMotionEvent != undefined) {
 clearCanvas();
         draw();
 
-        for(var i = 0; i < 360; i+=1){
+        for(var i = 0; i < 1; i+=1){
             ballBorder[i] = new drawPoint(i, 1);
         }
 
@@ -180,6 +180,8 @@ function drawPoint(angle, distanceFromCenter){
     this.y = y;
     ctx.beginPath();
         ctx.arc(this.x, this.y, 25, 0, 2*Math.PI);
+        ctx.fillStyle = 'yellow';
+        ctx.fill();
         ctx.lineWidth = 1;
         ctx.strokeStyle = 'red';
         ctx.stroke();
