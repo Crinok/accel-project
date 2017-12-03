@@ -3,7 +3,7 @@ canvas.width = document.documentElement.clientWidth;
 canvas.height = document.documentElement.clientHeight;
 var ctx = canvas.getContext("2d");
 
-var x = document.documentElement.clientWidth / 2, y = document.documentElement.clientHeight / 2;
+var a = document.documentElement.clientWidth / 2, b = document.documentElement.clientHeight / 2;
 var vx = 0, vy = 0;
 var ax, ay;
 var ball;
@@ -71,7 +71,6 @@ function ballCollision() {
     for (var obj1 in objArray) {
         for (var obj2 in objArray) {
             if (obj1 !== obj2 && distanceNextFrame(objArray[obj1], objArray[obj2]) <= 0) {
-                // ballCollisionSafety();
                 var theta1 = objArray[obj1].angle();
                 var theta2 = objArray[obj2].angle();
                 var phi = Math.atan2(objArray[obj2].y - objArray[obj1].y, objArray[obj2].x - objArray[obj1].x);
@@ -104,8 +103,8 @@ function moveObjects() {
 }
 
 function moveBall() {
-    ball.x += ball.dx;
-    ball.y += ball.dy;
+    ball.x += ball.dx + a;
+    ball.y += ball.dy + b;
 }
 
 function drawObjects() {
@@ -118,10 +117,10 @@ function drawObjects() {
 
 function draw() {
     clearCanvas();
-    drawObjects();
+
     moveBall();
     moveObjects();
-    
+    drawObjects();
     ballCollision();
     wallCollisionBall()
     wallCollision();
@@ -131,7 +130,7 @@ function draw() {
 bigCircle = new Ball(canvas.width/2, canvas.height/2, canvas.width/4, 'transparent');
 // objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
 objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "red");
-ball = new Ball(canvas.width/2, canvas.height/2, 20, "white", x, y);
+ball = new Ball(canvas.width/2, canvas.height/2, 20, "white");
 
 
 
@@ -153,8 +152,8 @@ if (window.DeviceMotionEvent != undefined) {
 
         vx = vx * gravity;
         vy = vy * gravity;
-        y = parseInt(y + vy / 50);
-        x = parseInt(x + vx / 50);
+        b = parseInt(b + vy / 50);
+        a = parseInt(a + vx / 50);
 
         draw();
 
@@ -162,10 +161,10 @@ if (window.DeviceMotionEvent != undefined) {
     );
 }
 
-function Ball(x, y, radius, ballColor, a, b) {
+function Ball(x, y, radius, ballColor) {
     this.radius = radius;
-    this.dx = a;
-    this.dy = b;
+    this.dx = 3;
+    this.dy = 3;
     // mass is that of a sphere, except the constants like PI and 4/3
     // reason for sphere over circle is, well, we're looking at spheres from above, duh
     this.mass = this.radius * this.radius * this.radius;
