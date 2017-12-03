@@ -183,9 +183,9 @@ if (window.DeviceMotionEvent != undefined) {
 		// }
 
 		drawBorder();
-		// drawPoint(0,0.1);
-		// drawPoint(0,1.5);
-		// drawPoint(180,1);
+		drawPoint(0,0.1);
+		drawPoint(0,1.5);
+		drawPoint(180,1);
 		for(var i = 0; i < 360; i+=10){
 			ballBorder[i] = new drawPoint(i, 1.2);
 		}
@@ -283,7 +283,7 @@ function drawPoint(angle, distanceFromCenter){
 	this.radius = radius;
 	context.beginPath();
     context.arc(x, y, 25, 0, 2 * Math.PI);
-    context.strokeStyle = 'transparent';
+    context.strokeStyle = 'red';
     context.stroke();
 }
 

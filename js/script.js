@@ -7,12 +7,16 @@ var x = document.documentElement.clientWidth / 2, y = document.documentElement.c
 var vx = 0, vy = 0,
     ax = 0, ay = 0;
 var ball;
+var ballBorder = [];
 var bigCircle;
+var radius = canvas.width/4;
 var objArray = [];
 var frameRate = 20;
 var acceleration = 7;
 var gravity = 0.97;
 var bounciness = 8;
+var centerPivotX = canvas.width / 2;
+var centerPivotY = canvas.height / 2;
 
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -40,6 +44,10 @@ if (window.DeviceMotionEvent != undefined) {
         x = parseInt(x + vx / 50);
 
         draw();
+
+        for(var i = 0; i < 360; i+=5){
+            ballBorder[i] = new drawPoint(i, 1);
+        }
 
         }, frameRate
     );
@@ -119,16 +127,16 @@ function boundingBoxCheck(){
 
 function ballCollision() {
     for (var obj1 in objArray) {
-        for (var obj2 in objArray) {
-            if (ball !== obj2 && distanceNextFrame(ball, objArray[obj2]) <= 0) {
+        for (var obj2 in ballBorder) {
+            if (ball !== obj2 && distanceNextFrame(ball, ballBorder[obj2]) <= 0) {
                 // ballCollisionSafety();
                 var theta1 = ball.angle();
-                var theta2 = objArray[obj2].angle();
-                var phi = Math.atan2(objArray[obj2].y - ball.y, objArray[obj2].x - ball.x);
+                var theta2 = ballBorder[obj2].angle();
+                var phi = Math.atan2(ballBorder[obj2].y - ball.y, ballBorder[obj2].x - ball.x);
                 var m1 = ball.mass;
-                var m2 = objArray[obj2].mass;
+                var m2 = ballBorder[obj2].mass;
                 var v1 = ball.speed();
-                var v2 = objArray[obj2].speed();
+                var v2 = ballBorder[obj2].speed();
 
                 var dx1F = (v1 * Math.cos(theta1 - phi) * (m1-m2) + 2*m2*v2*Math.cos(theta2 - phi)) / (m1+m2) * Math.cos(phi) + v1*Math.sin(theta1-phi) * Math.cos(phi+Math.PI/2);
                 var dy1F = (v1 * Math.cos(theta1 - phi) * (m1-m2) + 2*m2*v2*Math.cos(theta2 - phi)) / (m1+m2) * Math.sin(phi) + v1*Math.sin(theta1-phi) * Math.sin(phi+Math.PI/2);
@@ -137,8 +145,8 @@ function ballCollision() {
 
                 ball.dx = dx1F;                
                 ball.dy = dy1F;                
-                objArray[obj2].dx = dx2F;                
-                objArray[obj2].dy = dy2F;
+                ballBorder[obj2].dx = dx2F;                
+                ballBorder[obj2].dy = dy2F;
             }
 
         }
@@ -153,9 +161,45 @@ function moveObjects() {
     
 }
 
-function moveBall() {
-    ball.x += ball.dx;
-    ball.y += ball.dy;
+// function moveBall() {
+//     ball.x += ball.dx;
+//     ball.y += ball.dy;
+// }
+
+function drawPoint(angle, distanceFromCenter){
+    var x = centerPivotX + radius * Math.cos(-angle*Math.PI/180) * distanceFromCenter;
+    var y = centerPivotY + radius * Math.sin(-angle*Math.PI/180) * distanceFromCenter;
+
+    this.radius = radius;
+    this.dx = 3;
+    this.dy = 3;
+    // mass is that of a sphere, except the constants like PI and 4/3
+    // reason for sphere over circle is, well, we're looking at spheres from above, duh
+    this.mass = this.radius * this.radius * this.radius;
+    this.x = x;
+    this.y = y;
+    ctx.beginPath();
+        ctx.arc(this.x, this.y, 25, 0, 2*Math.PI);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+        ctx.closePath();
+        
+    this.speed = function() {
+        // magnitude of velocity vector
+        return Math.sqrt(this.dx * this.dx + this.dy * this.dy);
+    };
+    this.angle = function() {
+        //angle of ball with the xy plane
+        return Math.atan2(this.dy, this.dx);
+    };
+    this.kineticEnergy = function () {
+    // only for masturbation purposes, not rly used for computation.
+        return (0.5 * this.mass * this.speed() * this.speed());
+    };
+    this.onGround = function() {
+        return (this.y + this.radius >= canvas.height)
+    }
 }
 
 function drawObjects() {
@@ -181,7 +225,7 @@ function draw() {
     // requestAnimationFrame(draw);
 }
 
-bigCircle = new Ball(canvas.width/2, canvas.height/2, canvas.width/4, 'transparent');
+bigCircle = new Ball(canvas.width/2, canvas.height/2, radius, 'transparent');
 // objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
 objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "green");
 
