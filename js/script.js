@@ -4,8 +4,8 @@ canvas.height = document.documentElement.clientHeight;
 var ctx = canvas.getContext("2d");
 
 var x = document.documentElement.clientWidth / 2, y = document.documentElement.clientHeight / 2;
-var vx = 0, vy = 0;
-var ax, ay;
+var vx = 0, vy = 0,
+    ax = 0, ay = 0;
 var ball;
 var bigCircle;
 var objArray = [];
@@ -15,6 +15,33 @@ var gravity = 0.97;
 
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+if (window.DeviceMotionEvent != undefined) {
+    window.ondevicemotion = function(e) {
+        ax = event.accelerationIncludingGravity.x * - acceleration;
+        ay = event.accelerationIncludingGravity.y * - acceleration;
+    }
+
+    setInterval( function() {
+        var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
+        if (landscapeOrientation) {
+            vx = vx + ay;
+            vy = vy + ax;
+        } else {
+            vy = vy - ay;
+            vx = vx + ax;
+        }
+
+        vx = vx * gravity;
+        vy = vy * gravity;
+        y = parseInt(y + vy / 50);
+        x = parseInt(x + vx / 50);
+
+        draw();
+
+        }, frameRate
+    );
 }
 
 function wallCollision() {
@@ -44,7 +71,7 @@ function wallCollision() {
 
 function wallCollisionBall() {
 
-    if (ball.x - ball.radius + ball.dx < 0 ||ball.x + ball.radius + ball.dx > canvas.width) {
+    if (ball.x - ball.radius + ball.dx < 0 || ball.x + ball.radius + ball.dx > canvas.width) {
         ball.dx *= -1;
     }
     if (ball.y - ball.radius + ball.dy < 0 ||
@@ -104,23 +131,24 @@ function moveObjects() {
 }
 
 function moveBall() {
-    ball.x += ball.dx + x;
-    ball.y += ball.dy + y;
+    ball.x += ball.dx;
+    ball.y += ball.dy;
 }
 
 function drawObjects() {
     for (var obj in objArray) {
         bigCircle.draw();
-        objArray[obj].draw();
-        ball.draw();
+        objArray[obj].draw();  
     }
+
+    ball.draw();
 }
 
 function draw() {
     clearCanvas();
-
+    ball = new Ball(x, y, 20, "white");
     drawObjects();
-    moveBall();
+    // moveBall();
     moveObjects();
     
     ballCollision();
@@ -132,36 +160,7 @@ function draw() {
 bigCircle = new Ball(canvas.width/2, canvas.height/2, canvas.width/4, 'transparent');
 // objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
 objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "red");
-ball = new Ball(canvas.width/2, canvas.height/2, 20, "yellow");
 
-
-
-if (window.DeviceMotionEvent != undefined) {
-    window.ondevicemotion = function(e) {
-        ax = event.accelerationIncludingGravity.x * - acceleration;
-        ay = event.accelerationIncludingGravity.y * - acceleration;
-    }
-
-    setInterval( function() {
-        var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
-        if (landscapeOrientation) {
-            vx = vx + ay;
-            vy = vy + ax;
-        } else {
-            vy = vy - ay;
-            vx = vx + ax;
-        }
-
-        vx = vx * gravity;
-        vy = vy * gravity;
-        y = parseInt(y + vy / 50);
-        x = parseInt(x + vx / 50);
-
-        ball.draw();
-
-        }, frameRate
-    );
-}
 
 function Ball(x, y, radius, ballColor) {
     this.radius = radius;
