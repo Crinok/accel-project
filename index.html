@@ -137,8 +137,8 @@ if (window.DeviceMotionEvent != undefined) {
 
     if(getDistance(ball.posX, ball.posY, pocket1.posX, pocket1.posY) < ball.radius + pocket1.radius){
       div1.style.display = "block";
-        x = x - ball.radius;
-        y = y - ball.radius;
+        x = x - 1;
+        y = y - 1;
         vx = -vx / bounciness;
         vy = -vy / bounciness;
         // ball.radius = 0;
