@@ -3,7 +3,7 @@ canvas.width = document.documentElement.clientWidth;
 canvas.height = document.documentElement.clientHeight;
 var ctx = canvas.getContext("2d");
 
-var a = document.documentElement.clientWidth / 2, b = document.documentElement.clientHeight / 2;
+var x = document.documentElement.clientWidth / 2, y = document.documentElement.clientHeight / 2;
 var vx = 0, vy = 0;
 var ax, ay;
 var ball;
@@ -71,6 +71,7 @@ function ballCollision() {
     for (var obj1 in objArray) {
         for (var obj2 in objArray) {
             if (obj1 !== obj2 && distanceNextFrame(objArray[obj1], objArray[obj2]) <= 0) {
+                // ballCollisionSafety();
                 var theta1 = objArray[obj1].angle();
                 var theta2 = objArray[obj2].angle();
                 var phi = Math.atan2(objArray[obj2].y - objArray[obj1].y, objArray[obj2].x - objArray[obj1].x);
@@ -103,8 +104,8 @@ function moveObjects() {
 }
 
 function moveBall() {
-    ball.x += ball.dx + a;
-    ball.y += ball.dy + b;
+    ball.x += ball.dx + x;
+    ball.y += ball.dy + y;
 }
 
 function drawObjects() {
@@ -118,9 +119,10 @@ function drawObjects() {
 function draw() {
     clearCanvas();
 
+    drawObjects();
     moveBall();
     moveObjects();
-    drawObjects();
+    
     ballCollision();
     wallCollisionBall()
     wallCollision();
@@ -130,7 +132,7 @@ function draw() {
 bigCircle = new Ball(canvas.width/2, canvas.height/2, canvas.width/4, 'transparent');
 // objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
 objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "red");
-ball = new Ball(canvas.width/2, canvas.height/2, 20, "white");
+ball = new Ball(canvas.width/2, canvas.height/2, 20, "yellow");
 
 
 
@@ -152,10 +154,10 @@ if (window.DeviceMotionEvent != undefined) {
 
         vx = vx * gravity;
         vy = vy * gravity;
-        b = parseInt(b + vy / 50);
-        a = parseInt(a + vx / 50);
+        y = parseInt(y + vy / 50);
+        x = parseInt(x + vx / 50);
 
-        draw();
+        ball.draw();
 
         }, frameRate
     );
@@ -173,7 +175,7 @@ function Ball(x, y, radius, ballColor) {
     this.color = ballColor;
     this.draw = function() {
         ctx.beginPath();
-        ctx.arc(Math.round(this.x), Math.round(this.y), this.radius, 0, 2*Math.PI);
+        ctx.arc(this.x, this.y, this.radius, 0, 2*Math.PI);
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.lineWidth = 1;
