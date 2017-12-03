@@ -9,7 +9,7 @@ var vx = 0, vy = 0,
 var ball;
 var ballBorder = [];
 var bigCircle;
-var radius = 400;
+var radius = 50;
 var objArray = [];
 var frameRate = 20;
 var acceleration = 7;
