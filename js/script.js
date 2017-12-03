@@ -184,7 +184,7 @@ function drawPoint(angle, distanceFromCenter){
         ctx.strokeStyle = 'red';
         ctx.stroke();
         ctx.closePath();
-        
+
     this.speed = function() {
         // magnitude of velocity vector
         return Math.sqrt(this.dx * this.dx + this.dy * this.dy);
@@ -227,7 +227,7 @@ function draw() {
 
 bigCircle = new Ball(canvas.width/2, canvas.height/2, radius, 'transparent');
 // objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "transparent");
-objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "green");
+objArray[objArray.length] = new Ball(canvas.width, canvas.height/2, 20, "red");
 
 
 function Ball(x, y, radius, ballColor) {
