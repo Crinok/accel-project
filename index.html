@@ -106,7 +106,7 @@ var radius = 150;
 var ball, ball2, hole1, hole2, hole3, hole4, border, innerCircle, outsideCircle;
 var pocket1, pocket2, pocket3, pocket4;
 var ballBorder = [];
-
+var body = document.getElementsByTagName("BODY")[0];
 
 if (window.DeviceMotionEvent != undefined) {
   window.ondevicemotion = function(e) {
@@ -128,6 +128,9 @@ if (window.DeviceMotionEvent != undefined) {
     vy = vy * gravity;
     y = parseInt(y + vy / 50);
     x = parseInt(x + vx / 50);
+    
+    
+    body.innerHTML = "x: " + x + ", y: "+ y;
 
     boundingBoxCheck();
     init();
