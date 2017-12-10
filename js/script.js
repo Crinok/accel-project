@@ -42,7 +42,7 @@ if (window.DeviceMotionEvent != undefined) {
         vy = vy * gravity;
         y = parseInt(y + vy / 50);
         x = parseInt(x + vx / 50);
-clearCanvas();
+        clearCanvas();
         draw();
 
         for(var i = 0; i < 1; i+=1){
