@@ -13,19 +13,20 @@ var render = Render.create({
     engine: engine
 });
 
-var boxA = null;
-var boxB = null;
+var boxA;
+// var boxB;
 function readMouseMove(e){
   // ball1 = new Circle(e.clientX, e.clientY, 10, "white");
-}
-
-// create two boxes and a ground
-var boxA = Bodies.rectangle(400, 200, 80, 80);
-var boxB = Bodies.rectangle(450, 50, 80, 80);
-var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+  // create two boxes and a ground
+	boxA = Bodies.rectangle(e.clientX, e.clientY, 80, 80);
+	//boxB = Bodies.rectangle(450, 50, 80, 80);
+	
 
 // add all of the bodies to the world
-World.add(engine.world, [boxA, boxB, ground]);
+}
+
+var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+World.add(engine.world, [boxA, ground]);
 
 // run the engine
 Engine.run(engine);

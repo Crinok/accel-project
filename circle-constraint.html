@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<style type="text/css">
+		html, body {
+		  height: 100%;
+		}
+
+		#canvas {
+		  background: #eee;
+		  position: absolute;
+		  height: 300px;
+		  width: 300px;
+		  top: 50%;
+		  left: 50%;
+		  margin-top: -150px;
+		  margin-left: -150px;
+		  -webkit-border-radius: 300px;
+		  -moz-border-radius: 300px;
+		  border-radius: 300px;
+		  border: dashed #ccc 1px;
+		}
+
+		#pointer {
+		  position: absolute;
+		  background: #000;
+		  width: 20px;
+		  height: 20px;
+		  -webkit-border-radius: 20px;
+		  -moz-border-radius: 20px;
+		  border-radius: 20px;
+		  margin-top: -10px;
+		  margin-left: -10px;
+		  top: 50%;
+		  left: 50%;
+		}
+
+		#intructions {
+		  position: absolute;
+		  bottom: 0;
+		  text-align: center;
+		  padding-bottom: 10px;
+		  width: 100%;
+		}
+	</style>
+
+	<div id="canvas"></div>
+	<div id="pointer"></div>
+	<div id="intructions">The black dot's movement should be constrained to the gray circle</div>
+
+	<script type="text/javascript">
+		var pointerEl = document.getElementById("pointer");
+		var canvasEl = document.getElementById("canvas");
+		var canvas = {
+		    width: canvasEl.offsetWidth,
+		    height: canvasEl.offsetHeight,
+		    top: canvasEl.offsetTop,
+		    left: canvasEl.offsetLeft
+		};
+		canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
+		canvas.radius = canvas.width / 2;
+
+
+		window.onmousemove = function(e) {
+		    var result = limit(e.x, e.y);
+		        pointer.style.left = result.x + "px";
+		        pointer.style.top = result.y + "px";
+		}
+
+		function limit(x, y) {
+		    var dist = distance([x, y], canvas.center);
+		    if (dist <= canvas.radius) {
+		        return {x: x, y: y};
+		    } 
+		    else {
+		        x = x - canvas.center[0];
+		        y = y - canvas.center[1];
+		        var radians = Math.atan2(y, x)
+				return {
+				   x: Math.cos(radians) * canvas.radius + canvas.center[0],
+				   y: Math.sin(radians) * canvas.radius + canvas.center[1]
+				}
+        	} 
+	    }
+
+		function distance(dot1, dot2) {
+		    var x1 = dot1[0],
+		        y1 = dot1[1],
+		        x2 = dot2[0],
+		        y2 = dot2[1];
+		    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+		}
+	</script>
+</body>
+</html>
