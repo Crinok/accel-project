@@ -110,9 +110,13 @@ var xMax = [];
 var yMax = [];
 var result;
 
+var level1, level2;
+var insideBorder = true;
+
 function readMouseMove(e){
-  //result = limit(e.x, e.y);
-  // ball1 = new Circle(result.x, result.y, 10, "white");
+  result = limit(e.x, e.y);
+  ball1 = new Circle(result.x, result.y, 10, "white");
+  console.log(level1);
 }
 
 if (window.DeviceMotionEvent != undefined) {
@@ -144,48 +148,52 @@ if (window.DeviceMotionEvent != undefined) {
     result = limit(x, y);
     ball = new Circle(result.x, result.y, 10, "white");
 
-    if(getDistance(ball.posX, ball.posY, pocket1.posX, pocket1.posY) < ball.radius + pocket1.radius){
-      div1.style.display = "block";
-        x = pocket1.posX;
-        y = pocket1.posY;
-        vx = -vx / bounciness;
-        vy = -vy / bounciness;
-    }
-    else if(getDistance(ball.posX, ball.posY, pocket1.posX, pocket1.posY) > ball.radius + pocket1.radius){
-    }
+    // if(getDistance(ball.posX, ball.posY, pocket1.posX, pocket1.posY) < ball.radius + pocket1.radius){
+    //   div1.style.display = "block";
+    //     x = pocket1.posX;
+    //     y = pocket1.posY;
+    //     vx = -vx / bounciness;
+    //     vy = -vy / bounciness;
+    // }
+    // else if(getDistance(ball.posX, ball.posY, pocket1.posX, pocket1.posY) > ball.radius + pocket1.radius){
+    // }
 
-    if(getDistance(ball.posX, ball.posY, pocket2.posX, pocket2.posY) < ball.radius + pocket2.radius){
-      div2.style.display = "block";
-      x = pocket2.posX;
-      y = pocket2.posY;
-      vx = -vx / bounciness;
-      vy = -vy / bounciness;
-    }
-    else if(getDistance(ball.posX, ball.posY, pocket2.posX, pocket2.posY) > ball.radius + pocket2.radius){
-    }
+    // if(getDistance(ball.posX, ball.posY, pocket2.posX, pocket2.posY) < ball.radius + pocket2.radius){
+    //   div2.style.display = "block";
+    //   x = pocket2.posX;
+    //   y = pocket2.posY;
+    //   vx = -vx / bounciness;
+    //   vy = -vy / bounciness;
+    // }
+    // else if(getDistance(ball.posX, ball.posY, pocket2.posX, pocket2.posY) > ball.radius + pocket2.radius){
+    // }
 
-    if(getDistance(ball.posX, ball.posY, pocket3.posX, pocket3.posY) < ball.radius + pocket3.radius){
-      div3.style.display = "block";
-      x = pocket3.posX;
-      y = pocket3.posY;
-      vx = -vx / bounciness;
-      vy = -vy / bounciness;
-    }
-    else if(getDistance(ball.posX, ball.posY, pocket3.posX, pocket3.posY) > ball.radius + pocket3.radius){
-    }
+    // if(getDistance(ball.posX, ball.posY, pocket3.posX, pocket3.posY) < ball.radius + pocket3.radius){
+    //   div3.style.display = "block";
+    //   x = pocket3.posX;
+    //   y = pocket3.posY;
+    //   vx = -vx / bounciness;
+    //   vy = -vy / bounciness;
+    // }
+    // else if(getDistance(ball.posX, ball.posY, pocket3.posX, pocket3.posY) > ball.radius + pocket3.radius){
+    // }
 
-    if(getDistance(ball.posX, ball.posY, pocket4.posX, pocket4.posY) < ball.radius + pocket4.radius){
-      div4.style.display = "block";
-        x = pocket4.posX;
-        y = pocket4.posY;
-        vx = -vx / bounciness;
-        vy = -vy / bounciness;
-    }
-    else if(getDistance(ball.posX, ball.posY, pocket4.posX, pocket4.posY) > ball.radius + pocket4.radius){
-    }
+    // if(getDistance(ball.posX, ball.posY, pocket4.posX, pocket4.posY) < ball.radius + pocket4.radius){
+    //   div4.style.display = "block";
+    //     x = pocket4.posX;
+    //     y = pocket4.posY;
+    //     vx = -vx / bounciness;
+    //     vy = -vy / bounciness;
+    // }
+    // else if(getDistance(ball.posX, ball.posY, pocket4.posX, pocket4.posY) > ball.radius + pocket4.radius){
+    // }
     
     drawBorder();
     innerCircle.update();
+    drawArcs(100, 15, 75);
+    drawArcs(100, 105, 165);
+    drawArcs(100, 195, 255);
+    drawArcs(100, 285, 345);
     pocket1.update();
     pocket2.update();
     pocket3.update();
@@ -220,18 +228,74 @@ canvas.center = [centerPivotX, centerPivotY];
 
 function limit(x, y) {
   var dist = distance([x, y], canvas.center);
-  if (dist <= radius) {
-      return {x: x, y: y};
-  } 
-  else {
-      x = x - centerPivotX;
-      y = y - centerPivotY;
-      var radians = Math.atan2(y, x)
-  return {
-     x: Math.cos(radians) * radius + centerPivotX,
-     y: Math.sin(radians) * radius + centerPivotY
+  console.log("Distance " + dist);
+
+  var a = x - centerPivotX;
+  var b = y - centerPivotY;
+  var rad = Math.atan2(b, a);
+  var angle = -rad * (180/Math.PI);
+  console.log(angle);
+
+  if(dist <= 100){
+    level1 = true;
+    level2 = false;
+    console.log("level 1");
+    // return {x: x, y: y};
   }
-    } 
+  else if(dist >= 100 && dist <= radius){
+    level1 = false;
+    level2 = true;
+    console.log("level 2");
+  }
+  else if(dist >= radius){
+    level1 = false;
+    level2 = false;
+    console.log("outside level 2");
+  }
+
+  if(level1 && !level2){
+    return {x: x, y: y};
+  }
+  else{
+    console.log("level 1 constrained");
+    x = x - centerPivotX;
+    y = y - centerPivotY;
+    var radians = Math.atan2(y, x);
+    return {
+       x: Math.cos(radians) * 100 + centerPivotX,
+       y: Math.sin(radians) * 100 + centerPivotY
+    }
+  }
+
+  if((angle <= 9 && angle >= -9 && !level1 && level2)  || (angle >= 81 && angle <= 99 && !level1 && level2)  || (angle >= 171 && angle >= -171 && !level1 && level2)  || (angle >= -99 && angle <= -81 && !level1 && level2)){
+    console.log("free within opening");
+    return {x: x, y: y};
+  }
+  else{
+    console.log("level 1 constrained");
+    x = x - centerPivotX;
+    y = y - centerPivotY;
+    var radians = Math.atan2(y, x);
+    return {
+       x: Math.cos(radians) * radius + centerPivotX,
+       y: Math.sin(radians) * radius + centerPivotY
+    }
+  }
+  
+  if(dist <= radius && dist >= 100 && !level1 && level2) {
+    console.log("level 2 free");
+    return {x: x, y: y};
+  } 
+  else if(!level1 && !level2){
+    console.log("level 2 constrained");
+    x = x - centerPivotX;
+    y = y - centerPivotY;
+    var radians = Math.atan2(y, x);
+    return {
+       x: Math.cos(radians) * radius + centerPivotX,
+       y: Math.sin(radians) * radius + centerPivotY
+    }
+  } 
 }
 
 function distance(dot1, dot2) {
@@ -264,12 +328,21 @@ function Circle(posX, posY, radius, color){
   };
 }
 
+function drawArcs(r, startAngle, endAngle){
+    context.beginPath();
+    context.arc(centerPivotX, centerPivotY, r, degreesToRadians(startAngle), degreesToRadians(endAngle));
+    context.strokeStyle = 'white';
+    context.lineWidth =1;
+    context.stroke();
+}
+
 function drawBorder(){
     context.beginPath();
-    context.arc(centerPivotX, centerPivotY, radius, 0, Math.PI * 2);
+    context.arc(centerPivotX, centerPivotY, radius, 0, degreesToRadians(360));
     context.fillStyle = '#bf7c30';
     context.fill();
     context.strokeStyle = 'white';
+    context.lineWidth =1;
     context.stroke();
 }
 
@@ -292,6 +365,14 @@ function drawPoint(distanceFromCenter, angle){
     context.strokeStyle = '#482714';
     context.stroke();
   }
+}
+
+function degreesToRadians (degrees) {
+  return degrees * (Math.PI/180);     
+}
+
+function radiansToDegrees (radians) {
+  return radians * (180/Math.PI);
 }
 
 function boundingBoxCheck(){
