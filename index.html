@@ -256,7 +256,7 @@ function limit(x, y) {
   if(level1 && !level2){
     return {x: x, y: y};
   }
-  else if((angle <= 9 && angle >= -9 && dist >= 100)  || (angle >= 81 && angle <= 99 && !level1 && level2)  || (angle >= 171 && angle >= -171 && !level1 && level2)  || (angle >= -99 && angle <= -81 && !level1 && level2)){
+  else if((angle <= 9 && angle >= -9 && dist >= 100)  || (angle >= 81 && angle <= 99 && && dist >= 100)  || (angle >= 171 && angle >= -171 && dist >= 100)  || (angle >= -99 && angle <= -81 && dist >= 100)){
     console.log("free within opening");
     return {x: x, y: y};
   }
